@@ -2,6 +2,7 @@ require("dotenv").config();
 import "regenerator-runtime/runtime.js";
 import express from "express";
 import http from "http";
+import cors from 'cors';
 
 import mongoose from 'mongoose';
 
@@ -9,7 +10,19 @@ import routes from './routes';
 
 const app = express();
 
-app.use(function(req, res, next) {
+const whitelist = ['http://cxefinance.com', 'http://www.cxefinance.com', 'http://localhost:3000']
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  },
+}
+
+/*app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
   if (req.method === 'OPTIONS') {
@@ -17,7 +30,9 @@ app.use(function(req, res, next) {
     return res.status(200).json({});
   }
   next();
-});
+});*/
+
+app.use(cors(corsOptions))
 
 app.use(express.urlencoded({
   extended: false
@@ -29,7 +44,7 @@ const PORT = process.env.PORT || 8080;
 const server = http.createServer(app);
 
 app.get('/', (req, res) => {
-  res.send('hello world api from sn')
+  res.send('hello world api from cxe')
 });
 
 app.use(auth);

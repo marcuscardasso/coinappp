@@ -6,6 +6,8 @@ var _express = _interopRequireDefault(require("express"));
 
 var _http = _interopRequireDefault(require("http"));
 
+var _cors = _interopRequireDefault(require("cors"));
+
 var _mongoose = _interopRequireDefault(require("mongoose"));
 
 var _routes = _interopRequireDefault(require("./routes"));
@@ -19,17 +21,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 require("dotenv").config();
 
 var app = (0, _express["default"])();
-app.use(function (req, res, next) {
+var whitelist = ['http://cxefinance.com', 'http://www.cxefinance.com', 'http://localhost:3000'];
+var corsOptions = {
+  origin: function origin(_origin, callback) {
+    if (whitelist.indexOf(_origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
+};
+/*app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-
   if (req.method === 'OPTIONS') {
     res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
     return res.status(200).json({});
   }
-
   next();
-});
+});*/
+
+app.use((0, _cors["default"])(corsOptions));
 app.use(_express["default"].urlencoded({
   extended: false
 }));
@@ -44,7 +56,7 @@ var PORT = process.env.PORT || 8080;
 var server = _http["default"].createServer(app);
 
 app.get('/', function (req, res) {
-  res.send('hello world api from sn');
+  res.send('hello world api from cxe');
 });
 app.use(auth);
 app.use(email);

@@ -24,7 +24,7 @@ services:
     restart: always
     build: ./serverapp
     environment:
-      - PORT=8000
+      - PORT=8001
     links:
       - cxedb
   cxenuxt-app:
