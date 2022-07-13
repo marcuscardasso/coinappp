@@ -1,5 +1,16 @@
 version: "3"
 services:
+  cxeserver:
+    container_name: cxeserver
+    build: ./nginx
+    ports:
+      - "81:81"
+      - "443:443"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./nginx/data/certs:/etc/nginx/certs
+    depends_on:
+        - cxenode-app
   cxedb:
     container_name: cxedb
     image: mongo
@@ -13,7 +24,7 @@ services:
     restart: always
     build: ./serverapp
     environment:
-      - PORT=8002
+      - PORT=8000
     links:
       - cxedb
   cxenuxt-app:
@@ -21,5 +32,5 @@ services:
     container_name: cxenuxt-app
     restart: always
     environment:
-      - PORT=4001
+      - PORT=4000
     command: 'npm run start'
