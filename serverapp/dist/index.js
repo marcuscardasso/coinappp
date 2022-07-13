@@ -21,27 +21,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 require("dotenv").config();
 
 var app = (0, _express["default"])();
-var whitelist = ['http://cxefinance.com', 'http://www.cxefinance.com', 'http://localhost:3000'];
-var corsOptions = {
-  origin: function origin(_origin, callback) {
-    if (whitelist.indexOf(_origin) !== -1) {
-      callback(null, true);
+/*const whitelist = ['http://cxefinance.com', 'http://www.cxefinance.com', 'http://localhost:3000']
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
     } else {
-      callback(new Error('Not allowed by CORS'));
+      callback(new Error('Not allowed by CORS'))
     }
-  }
-};
-/*app.use(function(req, res, next) {
+  },
+}*/
+
+app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+
   if (req.method === 'OPTIONS') {
     res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
     return res.status(200).json({});
   }
-  next();
-});*/
 
-app.use((0, _cors["default"])(corsOptions));
+  next();
+});
 app.use(_express["default"].urlencoded({
   extended: false
 }));

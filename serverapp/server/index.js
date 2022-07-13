@@ -10,7 +10,7 @@ import routes from './routes';
 
 const app = express();
 
-const whitelist = ['http://cxefinance.com', 'http://www.cxefinance.com', 'http://localhost:3000']
+/*const whitelist = ['http://cxefinance.com', 'http://www.cxefinance.com', 'http://localhost:3000']
 
 const corsOptions = {
   origin: function (origin, callback) {
@@ -20,9 +20,9 @@ const corsOptions = {
       callback(new Error('Not allowed by CORS'))
     }
   },
-}
+}*/
 
-/*app.use(function(req, res, next) {
+app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
   if (req.method === 'OPTIONS') {
@@ -30,9 +30,7 @@ const corsOptions = {
     return res.status(200).json({});
   }
   next();
-});*/
-
-app.use(cors(corsOptions))
+});
 
 app.use(express.urlencoded({
   extended: false
