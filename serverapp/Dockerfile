@@ -5,7 +5,7 @@ COPY package*.json ./
 RUN npm install
 
 COPY . .
-ENV PORT 8001
+ENV PORT 8002
 
 EXPOSE $PORT
 CMD [ "node", "dist/index.js" ]

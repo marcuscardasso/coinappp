@@ -10,10 +10,10 @@ COPY . .
 
 RUN npm run build
 
-EXPOSE 4000
+EXPOSE 4001
 
 ENV NUXT_HOST=0.0.0.0
 
-ENV NUXT_PORT=4000
+ENV NUXT_PORT=4001
 
 CMD [ "npm", "start" ]
