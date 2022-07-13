@@ -28,7 +28,7 @@ services:
     links:
       - db
   cxenuxt-app:
-    build: ./nordfin
+    build: ./coinappui
     container_name: cxenuxt-app
     restart: always
     environment:
