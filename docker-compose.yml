@@ -1,7 +1,7 @@
 version: "3"
 services:
-  cxeserver:
-    container_name: cxeserver
+  server:
+    container_name: server
     build: ./nginx
     ports:
       - "80:80"
@@ -10,26 +10,25 @@ services:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
       - ./nginx/data/certs:/etc/nginx/certs
     depends_on:
-        - cxenode-app
-  cxedb:
-    container_name: cxedb
+        - node-app
+  db:
+    container_name: db
     image: mongo
     environment:
       - PORT=27017
     volumes:
-    - /data-vol:/data/cxedb
-      #- /data-vol:/data/cxedb
-  cxenode-app:
-    container_name: cxenode-app
+    - /data-vol:/data/db
+  node-app:
+    container_name: node-app
     restart: always
     build: ./serverapp
     environment:
       - PORT=8001
     links:
-      - cxedb
-  cxenuxt-app:
+      - db
+  nuxt-app:
     build: ./coinappui
-    container_name: cxenuxt-app
+    container_name: nuxt-app
     restart: always
     environment:
       - PORT=4000
