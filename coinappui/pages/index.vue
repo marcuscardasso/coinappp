@@ -144,7 +144,7 @@
           <div class="landing__plan--section">Bonus up to 30%</div>
           <div class="landing__plan--section">Intro call from personal account manager</div>
           <div class="landing__plan--section">
-            <button>Open Account</button>
+            <button @click="openpage('signup')">Open Account</button>
           </div>
         </div>
 
@@ -166,11 +166,11 @@
           <h4>Silver</h4>
           <div class="landing__plan--section">FREE Demo Account</div>
           <div class="landing__plan--section">Min spread from 1.5 pips</div>
-          <div class="landing__plan--section">Max leverage up to 1:200</div>
+          <div class="landing__plan--section">Max leverage up to 1:400</div>
           <div class="landing__plan--section">Bonus up to 30%</div>
-          <div class="landing__plan--section">Intro call from personal account manager</div>
+          <div class="landing__plan--section">Personal Account Manager</div>
           <div class="landing__plan--section">
-            <button>Open Account</button>
+            <button @click="openpage('signup')">Open Account</button>
           </div>
         </div>
 
@@ -197,12 +197,12 @@
           </div>
           <h4>Gold</h4>
           <div class="landing__plan--section">FREE Demo Account</div>
-          <div class="landing__plan--section">Min spread from 1.5 pips</div>
-          <div class="landing__plan--section">Max leverage up to 1:200</div>
-          <div class="landing__plan--section">Bonus up to 30%</div>
-          <div class="landing__plan--section">Intro call from personal account manager</div>
+          <div class="landing__plan--section">Min spread from 0.8 pips</div>
+          <div class="landing__plan--section">Max leverage up to 1:500</div>
+          <div class="landing__plan--section">Bonus up to 100%</div>
+          <div class="landing__plan--section">Monthly session with a senior market analyst</div>
           <div class="landing__plan--section">
-            <button>Open Account</button>
+            <button @click="openpage('signup')">Open Account</button>
           </div>
         </div>
 
@@ -235,12 +235,12 @@
           </div>
           <h4>VIP</h4>
           <div class="landing__plan--section">FREE Demo Account</div>
-          <div class="landing__plan--section">Min spread from 1.5 pips</div>
-          <div class="landing__plan--section">Max leverage up to 1:200</div>
-          <div class="landing__plan--section">Bonus up to 30%</div>
-          <div class="landing__plan--section">Intro call from personal account manager</div>
+          <div class="landing__plan--section">Min spread from 0 pips</div>
+          <div class="landing__plan--section">Max leverage up to 1:500</div>
+          <div class="landing__plan--section">Dedicated personal account manager</div>
+          <div class="landing__plan--section">Development of an individual business plan</div>
           <div class="landing__plan--section">
-            <button>Open Account</button>
+            <button @click="openpage('signup')">Open Account</button>
           </div>
         </div>
       </div>
@@ -249,7 +249,7 @@
         <div class="landing__sectiontwo--top">
           <h2>Trade Traditional Assets or Take the Simple Path <span>with ETFs.</span></h2>
           <p class="subheader">We offer a unique option to trade using ETFs (Exchange Traded Fund), also known as ‘Bundles’. The bundles are made of several cryptocurrency pairs hand-picked by our experienced analysts according to market movements. All you need to do is to decide how much you want to potentially profit.</p>
-          <button class="trade">Trade ETFs</button>
+          <button class="trade" @click="openpage('dex')">Trade ETFs</button>
         </div>
         <div class="landing__sectiontwo--bottom">
           <div class="landing__sectiontwo--logopngs">
