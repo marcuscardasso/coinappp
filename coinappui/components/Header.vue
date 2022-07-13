@@ -1,5 +1,44 @@
 <template>
   <div>
+    <div class="header__tradecara">
+      <!-- TradingView Widget BEGIN -->
+<div class="tradingview-widget-container">
+  <div class="tradingview-widget-container__widget"></div>
+  <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/markets/" rel="noopener" target="_blank"><span class="blue-text">Markets</span></a> by TradingView</div>
+  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+  {
+  "symbols": [
+    {
+      "proName": "FOREXCOM:SPXUSD",
+      "title": "S&P 500"
+    },
+    {
+      "proName": "FOREXCOM:NSXUSD",
+      "title": "US 100"
+    },
+    {
+      "proName": "FX_IDC:EURUSD",
+      "title": "EUR/USD"
+    },
+    {
+      "proName": "BITSTAMP:BTCUSD",
+      "title": "Bitcoin"
+    },
+    {
+      "proName": "BITSTAMP:ETHUSD",
+      "title": "Ethereum"
+    }
+  ],
+  "showSymbolLogo": true,
+  "colorTheme": "light",
+  "isTransparent": false,
+  "displayMode": "adaptive",
+  "locale": "en"
+}
+  </script>
+</div>
+<!-- TradingView Widget END -->
+    </div>
     <div class="header">
         <div class="header--logo">
           <div class="header__flex" @click="openpage('')">
@@ -80,6 +119,31 @@ export default {
     padding: #{scaleValue(20)} #{scaleValue(150)};
     padding-top: #{scaleValue(30)};
     position: relative;
+
+    &__tradecara {
+      overflow: hidden;
+      height: #{scaleValue(35)};
+      position: relative;
+
+      &::before {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 100%;
+        width: #{scaleValue(30)};
+        background: #fff;
+        z-index: 2;
+
+        @media only screen and (max-width: 414px) { 
+           width: #{scaleValue(100)};
+        }
+      }
+
+      @media only screen and (max-width: 414px) { 
+        height: #{scaleValue(190)};
+      }
+    }
 
     @media only screen and (max-width: 414px) { 
        display: block;
