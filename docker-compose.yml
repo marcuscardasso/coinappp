@@ -1,6 +1,6 @@
 version: "3"
 services:
-  server:
+  cxeserver:
     container_name: cxeserver
     build: ./nginx
     ports:
@@ -11,7 +11,7 @@ services:
       - ./nginx/data/certs:/etc/nginx/certs
     depends_on:
         - cxenode-app
-  db:
+  cxedb:
     container_name: cxedb
     image: mongo
     environment:
@@ -19,7 +19,7 @@ services:
     volumes:
     - /data-vol:/data/cxedb
       #- /data-vol:/data/cxedb
-  node-app:
+  cxenode-app:
     container_name: cxenode-app
     restart: always
     build: ./serverapp
@@ -27,7 +27,7 @@ services:
       - PORT=8001
     links:
       - db
-  nuxt-app:
+  cxenuxt-app:
     build: ./nordfin
     container_name: cxenuxt-app
     restart: always
