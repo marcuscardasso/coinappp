@@ -52,7 +52,7 @@ app.use(admin);
 app.use(user);
 app.use(contact);
 
-_mongoose["default"].connect('mongodb://127.0.0.1:27017/cxedb', {
+_mongoose["default"].connect('mongodb://db:27017/cxedb', {
   //mongodb://db:27017/cxedb =====> production
   //mongodb://127.0.0.1:27017/cxedb ===> development
   useNewUrlParser: true,
