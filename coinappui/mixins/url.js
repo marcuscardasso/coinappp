@@ -1,10 +1,10 @@
 export default {
     computed: {
         baseUrl() {
-            return `http://localhost:8080`;
+            return `https://api.cxefinance.com`;
         },
     }
 }
 
 //development http://localhost:8080
-//production  https://api.cxe.com
+//production  https://api.cxefinance.com
