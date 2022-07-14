@@ -66,5 +66,5 @@ cxeserver:
     depends_on:
         - cxenode-app
 
-        joem@gmail.com
+        slavekmalek@gmail.com
   
