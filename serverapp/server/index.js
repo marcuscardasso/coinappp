@@ -51,9 +51,9 @@ app.use(admin);
 app.use(user);
 app.use(contact);
 
-mongoose.connect('mongodb://db:27017/cxedb', {
-  //mongodb://db:27017/cxedb =====> production
-  //mongodb://127.0.0.1:27017/cxedb ===> development
+mongoose.connect('mongodb://db:27017/db', {
+  //mongodb://db:27017/db =====> production
+  //mongodb://127.0.0.1:27017/db ===> development
 
     useNewUrlParser: true,
     useCreateIndex: true,
