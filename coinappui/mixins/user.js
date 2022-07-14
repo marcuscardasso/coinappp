@@ -10,6 +10,12 @@ export default {
     },
     mixins: [urlMixin],
     methods: {
+        logout() {
+            localStorage.removeItem('cxeuserxtxtxt');
+            localStorage.removeItem('cxetokenxtxtxt');
+
+            this.$router.push(`/`)
+        },
         goTo(route) {
             this.$router.push(`/${route}`)
         },

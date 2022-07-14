@@ -64,7 +64,7 @@
 
           <div class="header--menuitem header--menubtn" @click="openpage('signin')" v-if="!user">login</div>
           <div class="header--menuitem header--menubtn colored" @click="openpage('signup')" v-if="!user">Open Account</div>
-          <div class="header--menuitem header--menubtn" @click="openpage('signin')" v-if="user">logout</div>
+          <div class="header--menuitem header--menubtn" @click="logout" v-if="user">logout</div>
         </div>
       </div>
   </div>
