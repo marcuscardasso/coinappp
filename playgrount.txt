@@ -65,4 +65,6 @@ cxeserver:
       - ./nginx/data/certs:/etc/nginx/certs
     depends_on:
         - cxenode-app
+
+        joem@gmail.com
   
