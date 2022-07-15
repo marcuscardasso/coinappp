@@ -11,26 +11,50 @@
             <p>You can shift your account to the next level by increasing your deposit amount.</p>
         </div>
         <div class="accounttypes__main--bottom">
-            <div class="accounttypes__plan">
-          <div class="accounttypes__plan--star">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-              <g data-name="1star" transform="translate(-5609 -3812)">
-                <circle cx="12" cy="12" r="12" data-name="Ellipse 60" opacity=".2" transform="translate(5609 3812)"></circle>
-                <path d="m5621.366 3828.331-3.291 1.725a.594.594 0 0 1-.861-.621l.629-3.654-2.663-2.587a.589.589 0 0 1 .329-1.008l3.679-.533 1.646-3.323a.594.594 0 0 1 1.064 0l1.646 3.323 3.679.533a.591.591 0 0 1 .329 1.008l-2.663 2.586.627 3.652a.591.591 0 0 1-.859.623z"></path>
-              </g>
-            </svg>
+          <div class="accounttypes__plan">
+            <div class="accounttypes__plan--star">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <g data-name="1star" transform="translate(-5609 -3812)">
+                  <circle cx="12" cy="12" r="12" data-name="Ellipse 60" opacity=".2" transform="translate(5609 3812)"></circle>
+                  <path d="m5621.366 3828.331-3.291 1.725a.594.594 0 0 1-.861-.621l.629-3.654-2.663-2.587a.589.589 0 0 1 .329-1.008l3.679-.533 1.646-3.323a.594.594 0 0 1 1.064 0l1.646 3.323 3.679.533a.591.591 0 0 1 .329 1.008l-2.663 2.586.627 3.652a.591.591 0 0 1-.859.623z"></path>
+                </g>
+              </svg>
+            </div>
+            <h4>Standard</h4>
+            <div class="accounttypes__plan--section cost">$250 Min Deposit</div>
+            <div class="accounttypes__plan--section">Min spread from 1.5 pips</div>
+            <div class="accounttypes__plan--section">Max leverage up to 1:500</div>
+            <div class="accounttypes__plan--section">Bonus up to 25%</div>
+            <div class="accounttypes__plan--section">Customer support 24/5</div>
+            <div class="accounttypes__plan--section">Intro call from personal account manager</div>
+            <div class="accounttypes__plan--section btn">
+              <button @click="openpage('signup')">Start Trading</button>
+            </div>
           </div>
-          <h4>Standard</h4>
-          <div class="accounttypes__plan--section cost">$250 Min Deposit</div>
-          <div class="accounttypes__plan--section">Min spread from 1.5 pips</div>
-          <div class="accounttypes__plan--section">Max leverage up to 1:500</div>
-          <div class="accounttypes__plan--section">Bonus up to 30%</div>
-          <div class="accounttypes__plan--section">Customer support 24/5</div>
-          <div class="accounttypes__plan--section">Intro call from personal account manager</div>
-          <div class="accounttypes__plan--section btn">
-            <button @click="openpage('signup')">Start Trading</button>
+
+          <div class="accounttypes__plan">
+            <div class="accounttypes__plan--star">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <g data-name="1star" transform="translate(-5609 -3812)">
+                  <circle cx="12" cy="12" r="12" data-name="Ellipse 60" opacity=".2" transform="translate(5609 3812)"></circle>
+                  <path d="m5621.366 3828.331-3.291 1.725a.594.594 0 0 1-.861-.621l.629-3.654-2.663-2.587a.589.589 0 0 1 .329-1.008l3.679-.533 1.646-3.323a.594.594 0 0 1 1.064 0l1.646 3.323 3.679.533a.591.591 0 0 1 .329 1.008l-2.663 2.586.627 3.652a.591.591 0 0 1-.859.623z"></path>
+                </g>
+              </svg>
+            </div>
+            <h4>Bronze</h4>
+            <div class="accounttypes__plan--section cost">$2000 Min Deposit</div>
+            <div class="accounttypes__plan--section">Min spread from 1.5 pips</div>
+            <div class="accounttypes__plan--section">Max leverage up to 1:500</div>
+            <div class="accounttypes__plan--section">Bonus up to 30%</div>
+            <div class="accounttypes__plan--section">Customer support 24/5</div>
+            <div class="accounttypes__plan--section">Trading group calls and support</div>
+            <div class="accounttypes__plan--section">Intro call from personal account manager</div>
+            <div class="accounttypes__plan--section btn">
+              <button @click="openpage('signup')">Start Trading</button>
+            </div>
           </div>
-        </div>
+
+        
 
         <div class="accounttypes__plan">
           <div class="accounttypes__plan--star">
@@ -53,6 +77,7 @@
           <div class="accounttypes__plan--section">Max leverage up to 1:400</div>
           <div class="accounttypes__plan--section">Bonus up to 30%</div>
           <div class="accounttypes__plan--section">Customer support 24/5</div>
+            <div class="accounttypes__plan--section">Trading group calls and support</div>
           <div class="accounttypes__plan--section">Personal account manager</div>
           <div class="accounttypes__plan--section underlined">Investment research & analytics from Trading Central</div>
           <div class="accounttypes__plan--section btn">
@@ -87,6 +112,7 @@
           <div class="accounttypes__plan--section">Max leverage up to 1:500</div>
           <div class="accounttypes__plan--section">Bonus up to 100%</div>
           <div class="accounttypes__plan--section">Customer support 24/5</div>
+          <div class="accounttypes__plan--section">Trading group calls and support</div>
           <div class="accounttypes__plan--section">Personal account manager</div>
           <div class="accounttypes__plan--section underlined">Investment research & analytics from Trading Central</div>
           <div class="accounttypes__plan--section">Monthly session with a senior market analyst</div>
@@ -95,7 +121,7 @@
           </div>
         </div>
 
-        <div class="accounttypes__plan">
+        <!--<div class="accounttypes__plan">
           <div class="accounttypes__plan--star">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
               <g data-name="1star" transform="translate(-5609 -3812)">
@@ -136,7 +162,7 @@
           <div class="accounttypes__plan--section btn">
             <button @click="openpage('signup')">Start Trading</button>
           </div>
-        </div>
+        </div>-->
         </div>
       </div>
 

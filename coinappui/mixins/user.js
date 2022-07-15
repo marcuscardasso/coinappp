@@ -50,6 +50,7 @@ export default {
             const user_token = JSON.parse(localStorage.getItem('cxetokenxtxtxt'));
 
             if (user_details && user_token) {
+                console.log(user_details, user_token)
                 fetch(`${this.baseUrl}/api/getuser`, {
                     method: "GET",
                     headers: {
@@ -64,7 +65,7 @@ export default {
                     this.setUser(user, token)
                 })
             } else {
-                //this.$router.push('/');
+                console.log('no user')
             }
         },
         setUser(user, token) {

@@ -70,7 +70,6 @@ export default {
     mixins: [userMixin]
 }
 </script>
-</script>
 
 <style lang="scss" scoped>
 @function scaleValue($value) {

@@ -5,19 +5,23 @@
             <figure class="dexheader__logo" @click="openpage('')">
                 <img src="@/assets/imgs/logocx.png"/>
             </figure>
-            <span class="dexheader__left--item futures">Futures</span>
-            <span class="dexheader__left--item">Pools</span>
+            <!--<span class="dexheader__left--item futures">Futures</span>
+            <span class="dexheader__left--item">Pools</span>-->
         </div>
-        <div class="dexheader__area dexheader__right">
+        <div class="dexheader__area dexheader__right" v-if="!user">
+            <div class="dexheader__right--item primary-transparent btn" @click="openpage('signin')">login</div>
+            <div class="dexheader__right--item primary-color btn" @click="openpage('signup')">Open Account</div>
+        </div>
+        <div class="dexheader__area dexheader__right" v-if="user">
             <div class="dexheader__right--item">
                 <span class="polygonlogo">
                      <img src="@/assets/imgs/polygonlogo.png"/>
                 </span>
                 <span>Polygon</span>
             </div>
-            <div class="dexheader__right--item">Balance 1000.00 USDC</div>
+            <div class="dexheader__right--item">Balance ${{user.balance}}.00 USDC</div>
             <div class="dexheader__right--item">
-                <span>{{truncate('0x2202F3aC22c2F656D75F0BF984Cca70B7E0fC351', 15)}}</span>
+                <span>{{truncate(`${user._id}`, 15)}}</span>
             </div>
             <div class="dexheader__right--item dexheader__right--itembell">
                 <span class="dexheader__right--bell">
@@ -26,7 +30,7 @@
                     </svg>
                 </span>
             </div>
-            <div class="dexheader__right--item dexheader__right--itembell">
+            <div class="dexheader__right--item dexheader__right--itembell" @click="logout">
                 <span class="dexheader__right--bell">
                     <svg>
                         <use xlink:href="@/assets/imgs/sprite.svg#icon-logout" />
@@ -50,7 +54,12 @@ export default {
           this.$router.push('/')
       }
     }
-  }
+  },
+  computed: {
+     user: function() {
+        return this.$store.getters.user
+     },
+  },
 }
 </script>
 
@@ -77,7 +86,7 @@ export default {
     border-bottom: .1px solid rgba(255,255,255,.3);
     align-items: center;
     //background: rgb(8, 8, 33);
-    width: #{scaleValue(1341)};
+    width: #{scaleValue(1450)};
     padding: #{scaleValue(10)} #{scaleValue(14)};
     margin: 0 auto;
 
@@ -131,6 +140,23 @@ export default {
             margin-left: #{scaleValue(15)};
             color: rgba(255,255,255,.7);
 
+            &.primary-color {
+                background: #fd4f31;
+            }
+
+            &.primary-transparent {
+                background: transparent;
+            }
+
+            &.btn {
+                border: 1px solid #fd4f31;
+                font-size: #{scaleValue(15)};
+                border-radius: 3rem;
+                padding: #{scaleValue(10)} #{scaleValue(20)};
+                color: #fff;
+                cursor: pointer;
+            }
+
             & span {
                 display: flex;
                 align-items: center;
@@ -157,6 +183,8 @@ export default {
 
         &--itembell {
             background: transparent;
+
+            cursor: pointer;
         }
     }
 }
