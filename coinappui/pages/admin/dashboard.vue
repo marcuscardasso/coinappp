@@ -2,7 +2,7 @@
   <div class="dashboard">
     <h1 class="dashboard__h1">Admin Dashboard</h1>
     <div class="dashboard__list" v-if="users">
-      <h2 class="dashboard__h2">SwissNordic Users</h2>
+      <h2 class="dashboard__h2">Cxefinance Users</h2>
       <h2>{{ user ? user.name : '' }}</h2>
       <div v-for="item in users" class="dashboard__user">
         <span @click="editUser(item._id)" class="dashboard__user--edit">Edit user</span>
