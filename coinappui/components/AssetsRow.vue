@@ -3,13 +3,13 @@
     <div class="dex__rightnumbers">
         <div class="dex__rightnumbers--header">
             <div class="dex__rightnumbers--itemtype">
-                <span>Symbol</span>
+                <span>Amount</span>
             </div>
             <div class="dex__rightnumbers--itemprice">
-                <span>Sell</span>
+                <span>Price</span>
             </div>
             <div class="dex__rightnumbers--itemtime">
-                <span>Buy</span>
+                <span>Time</span>
             </div>
         </div>
         <div class="dex__rightnumbers--body">
@@ -46,7 +46,7 @@
 export default {
     data() {
         return {
-            rightNumberData: this.rightNumbers()
+            rightNumberData: this.rightNumbers(),
         }
     },
     mounted() {

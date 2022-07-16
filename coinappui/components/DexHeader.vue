@@ -85,8 +85,6 @@ export default {
     justify-content: space-between;
     border-bottom: .1px solid rgba(255,255,255,.3);
     align-items: center;
-    //background: rgb(8, 8, 33);
-    width: #{scaleValue(1450)};
     padding: #{scaleValue(10)} #{scaleValue(14)};
     margin: 0 auto;
 

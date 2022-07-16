@@ -43,6 +43,9 @@
         <div class="dex__header">
             <DexHeader />
         </div>
+        <div class="dex__header">
+            <!--<DexGraphToggle :graphtoggle="graphtoggle"/>-->
+        </div>
         <Popup :message="error" :functiontorun="resetError" v-if="error"/>
         <div class="dex__body">
             <div class="dex__left">
@@ -152,9 +155,16 @@
 
                     </div>
                     <div class="dex__graph">
-                        <DexGraph />
+                        <DexGraph :symbol="'BINANCE:BTCUSDT'" v-if="graphsymbol === 'BINANCE:BTCUSDT'"/>
+                        <DexGraph :symbol="'FX:AUDUSD'" v-if="graphsymbol === 'FX:AUDUSD'"/>
+                        <div class="dex__graphplaceholder" v-if="graphsymbol === 'none'"></div>
+                        <DexGraph :symbol="'COINBASE:BTCEUR'" v-if="graphsymbol === 'COINBASE:BTCEUR'"/>
+                        <DexGraph :symbol="'BINANCE:ETHUSDT'" v-if="graphsymbol === 'BINANCE:ETHUSDT'"/>
+                        <DexGraph :symbol="'BINANCE:EURUSDT'" v-if="graphsymbol === 'BINANCE:EURUSDT'"/>
+                        <DexGraph :symbol="'FX:GBPJPY'" v-if="graphsymbol === 'FX:GBPJPY'"/>
                     </div>
                     <div class="dex__assets">
+                        <h2 class="dex__assetsheader">Trades History</h2>
                         <div class="dex__dropdowns">
                             <div class="dex__dropdown" @click="toggleassets('favorites')">
                                 <div class="dex__dropdown--left dex__dropdown--area">
@@ -171,7 +181,7 @@
                                     </span>
                                 </div>
                             </div>
-                            <AssetsRow v-if="assetview === 'favorites'"/>
+                            <!--<AssetsRow v-if="assetview === 'favorites'"/>-->
                             <div class="dex__dropdown" @click="toggleassets('forex')">
                                 <div class="dex__dropdown--left dex__dropdown--area">
                                     <span class="dex__dropdown--icon">
@@ -254,96 +264,7 @@
                     </div>
                 </div>
 
-                <div class="dex__rightbottom">
-                    <div class="dex__rightbottomhead">
-                        <div class="dex__rightbottomhead--position">
-                            <p>position</p>
-                        </div>
-                    </div>
-                    <div class="dex__rightbottombase">
-                        <div class="dex__rightbottombase--left">
-                            <div class="dex__rightbottombase--leftitem long">
-                                <span class="ethlogo">
-                                    <img src="@/assets/imgs/ethlogo.png"/>
-                                </span>
-                                <span class="green one">long</span>
-                            </div>
-                            <div class="dex__rightbottombase--leftitem">
-                                <span>
-                                    <svg>
-                                        <use xlink:href="@/assets/imgs/sprite.svg#icon-arrow-right1" />
-                                    </svg>
-                                </span>
-                                <span class="green two">$250.38</span>
-                            </div>
-                            <div class="dex__rightbottombase--leftitem">
-                                <span>
-                                    <svg>
-                                        <use xlink:href="@/assets/imgs/sprite.svg#icon-arrow-right1" />
-                                    </svg>
-                                </span>
-                                <span class="three">0.1017 ETH</span>
-                            </div>
-                        </div>
-
-                        <div class="dex__rightbottombase--right">
-                            <div class="dex__rightbottombase--rightarea">
-                                <div class="dex__rightbottombase--rightareaitem">
-                                    <h5>LEVERAGE</h5>
-                                    <div class="dex__rightbottombase--position">
-                                        <span>
-                                            <svg>
-                                                <use xlink:href="@/assets/imgs/sprite.svg#icon-arrow-right1" />
-                                            </svg>
-                                        </span>
-                                        <span>5x</span>
-                                    </div>
-                                </div>
-                                <div class="dex__rightbottombase--rightareaitem">
-                                    <h5>UNREALIZED P&L</h5>
-                                    <div class="dex__rightbottombase--position red">
-                                        <span>
-                                            <svg>
-                                                <use xlink:href="@/assets/imgs/sprite.svg#icon-arrow-right1" />
-                                            </svg>
-                                        </span>
-                                        <span>0.00</span>
-                                        <span>0.00%</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="dex__rightbottombase--rightarea">
-                                <div class="dex__rightbottombase--rightareaitem">
-                                    <h5>Liquidation Price</h5>
-                                    <div class="dex__rightbottombase--position">
-                                        <span>
-                                            <svg>
-                                                <use xlink:href="@/assets/imgs/sprite.svg#icon-arrow-right1" />
-                                            </svg>
-                                        </span>
-                                        <span>$1,942.10</span>
-                                    </div>
-                                </div>
-                                <div class="dex__rightbottombase--rightareaitem">
-                                    <h5>UNREALIZED P&L</h5>
-                                    <div class="dex__rightbottombase--position red">
-                                        <span>
-                                            <svg>
-                                                <use xlink:href="@/assets/imgs/sprite.svg#icon-arrow-right1" />
-                                            </svg>
-                                        </span>
-                                        <span>0.00</span>
-                                        <span>0.00%</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="dex__rightbottombase--rightarea">
-                                <button>Close Position</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+            
             </div>
         </div>
     </div>
@@ -359,11 +280,20 @@ export default {
           positionSize: '0.1017915',
           orderAction: 'buy',
           assetview: 'forex',
-          error: null
+          error: null,
+          graphsymbol: 'BINANCE:BTCUSDT'
       }
   },
   mixins: [userMixin],
   methods: {
+      graphtoggle(value) {
+          console.log(value)
+          this.graphsymbol = 'none',
+          
+          setTimeout(() => {
+              this.graphsymbol = value;
+          }, 1000)
+      },
       placeorder() {
           if (this.user === null) {
               this.error = 'You must log in to trade'
@@ -381,7 +311,8 @@ export default {
           } else {
               this.assetview = value;
           }
-      }
+      },
+
   },
   computed: {
      user: function() {
@@ -436,20 +367,9 @@ export default {
         position: relative;
         width: #{scaleValue(350)};
         height: #{scaleValue(836)};
-        background: rgb(19, 19, 47);
         padding: #{scaleValue(16)} #{scaleValue(16)};
 
         border-right: .1px solid rgba(255,255,255,.2);
-
-        &:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: #{scaleValue(57)};
-            width: 100%;
-            background: rgb(27, 27, 54);
-        }
     }
 
     &__flexarea {
@@ -503,6 +423,12 @@ export default {
             display: flex;
             align-items: center;
         }
+    }
+
+    &__assetsheader {
+        font-size: #{scaleValue(15)};
+        font-weight: 400;
+        padding: #{scaleValue(12)} 0;
     }
 
     &__sectionone {
@@ -717,7 +643,6 @@ export default {
     }
 
     &__rightbottom {
-        background: rgb(18, 18, 46);
         padding-bottom: #{scaleValue(30)}; 
     }
 
@@ -893,18 +818,10 @@ export default {
 
     &__rightbase {
         display: flex;
-        padding-top: #{scaleValue(20)}; 
-        padding-bottom: #{scaleValue(20)}; 
-        //background: rgb(8, 8, 33);
     }
 
-    &__graph {
-        //width: #{scaleValue(780)}; 
-        //height: #{scaleValue(400)}; 
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #fff;
+    &__graphplaceholder {
+        min-width: #{scaleValue(700)};
     }
 
     &__assets {
