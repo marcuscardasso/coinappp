@@ -66,7 +66,7 @@ app.use(admin);
 app.use(user);
 app.use(contact);
 
-_mongoose["default"].connect('mongodb://127.0.0.1:27017/db', {
+_mongoose["default"].connect('mongodb://db:27017/db', {
   //mongodb://db:27017/db =====> production
   //mongodb://127.0.0.1:27017/db ===> development
   useNewUrlParser: true,
@@ -89,7 +89,7 @@ _mongoose["default"].connect('mongodb://127.0.0.1:27017/db', {
               return _context.abrupt("return", error);
 
             case 2:
-              return _context.abrupt("return", console.log("server started on port here ".concat(PORT)));
+              return _context.abrupt("return", console.log("server started on port here now ".concat(PORT)));
 
             case 3:
             case "end":
