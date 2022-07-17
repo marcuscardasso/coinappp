@@ -12,7 +12,8 @@ import Contact from '../models/contact';
 contact.post('/api/contact', 
     body('email').isLength({ min: 3 }),
     body('message').isLength({ min: 5 }),
-    body('name').isLength({ min: 3 }), 
+    body('fullname').isLength({ min: 3 }), 
+    body('phone').isLength({ min: 3 }), 
     body('email').isEmail(), 
     async (req, res) => {
         const contact = new Contact(req.body);

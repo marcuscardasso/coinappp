@@ -30,7 +30,9 @@ contact.post('/api/contact', body('email').isLength({
   min: 3
 }), body('message').isLength({
   min: 5
-}), body('name').isLength({
+}), body('fullname').isLength({
+  min: 3
+}), body('phone').isLength({
   min: 3
 }), body('email').isEmail(), /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(req, res) {

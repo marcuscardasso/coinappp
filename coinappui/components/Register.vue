@@ -9,34 +9,47 @@
                 <div class="register__base--rightform">
                     <div class="register__base--rightformarea">
                         <span class="register__base--rightforminput">
-                            <input placeholder="First Name"/>
+                            <input placeholder="First Name" v-model="firstname" ref="firstname"/>
                         </span>
                         <span class="register__base--rightforminput">
-                            <input placeholder="Last Name"/>
-                        </span>
-                    </div>
-                    <div class="register__base--rightformarea">
-                        <span class="register__base--rightforminput">
-                            <input type="email" placeholder="Email"/>
-                        </span>
-                        <span class="register__base--rightforminput">
-                            <input placeholder="Phone"/>
+                            <input placeholder="Last Name" v-model="lastname" ref="lastname"/>
                         </span>
                     </div>
                     <div class="register__base--rightformarea">
                         <span class="register__base--rightforminput">
-                            <input placeholder="Password"/>
+                            <input type="email" placeholder="Email" v-model="email" ref="email"/>
                         </span>
                         <span class="register__base--rightforminput">
-                            <input placeholder="Confirm Password"/>
+                            <input placeholder="Phone" v-model="phonenumber" ref="phonenumber"/>
+                        </span>
+                    </div>
+                    <div class="register__base--rightformarea">
+                        <span class="register__base--rightforminput">
+                            <input type="text" placeholder="Iban" class="iban" v-model="iban" ref="iban"/>
+                        </span>
+                    </div>
+                    <div class="register__base--rightformarea">
+                        <span class="register__base--rightforminput">
+                            <div class="register__base--rightforminput passwordarea">
+                                <input placeholder="Password" type="password" v-model="password" ref="password"/>
+                                <label v-if="password_error" class="error">{{password_error ? `*${password_error}` : ''}}</label>
+                            </div>
+                        </span>
+                        <span class="register__base--rightforminput">
+                            <div class="register__base--rightforminput passwordarea">
+                                <input placeholder="Confirm Password" type="password" v-model="confirmpassword" ref="confirmpassword"/>
+                                <label v-if="confirmpassword_error" class="error">{{confirmpassword_error ? `*${confirmpassword_error}` : ''}}</label>
+                            </div>
                         </span>
                     </div>
                     <div class="register__base--rightformarea flex">
-                        <input type="checkbox"/>
+                        <input type="checkbox" v-model="termsagreed"/>
                         <span>I agree to the <span class="terms">terms and conditions</span></span>
+                        <label v-if="termsagreed_error" class="error terms">{{termsagreed_error ? `*${termsagreed_error}` : ''}}</label>
                     </div>
                     <div class="register__base--rightformarea">
-                        <button>Submit</button>
+                        <button @click="submit" v-if="!loading">Submit</button>
+                        <button v-if="loading">Registering...</button>
                     </div>
                 </div>
             </div>
@@ -46,7 +59,197 @@
 </template>
 
 <script>
-export default {}
+import * as EmailValidator from 'email-validator';
+import urlMixin from '@/mixins/url.js';
+export default {
+    data() {
+        return {
+            firstname: '',
+            lastname: '',
+            email: '',
+            iban: '',
+            phonenumber: '',
+            password: '',
+            confirmpassword: '',
+            termsagreed: false,
+            firstname_error: false,
+            lastname_error: false,
+            email_error: false,
+            iban_error: false,
+            phonenum_error: false,
+            password_error: false,
+            confirmpassword_error: false,
+            termsagreed_error: false,
+            loading: false,
+            error: false
+        }
+    },
+    mixins: [urlMixin], 
+    methods: {
+        register() {
+
+        },
+        setUser(user, token) {
+            localStorage.setItem('cxeuserxtxtxt', JSON.stringify(user));
+            localStorage.setItem('cxetokenxtxtxt', JSON.stringify(token));
+            const user_details = JSON.parse(localStorage.getItem('cxeuserxtxtxt'));
+            const user_token = JSON.parse(localStorage.getItem('cxetokenxtxtxt'));
+            user_details.token = user_token;
+
+            this.$store.dispatch('storeUser', user_details);
+        },           
+        authenticate(credentials, route) {
+            this.loading = true;
+            fetch(`${this.baseUrl}/${route}`, {
+                method: "POST",
+                body: JSON.stringify(credentials),
+                headers: {"Content-type": "application/json; charset=UTF-8"}
+            })
+            .then(response => {
+                return response.json();
+            }) 
+            .then(json => {
+                if (json.error) {
+                    this.loading = false;
+                    if (json.error.name === 'MongoError') {
+                        if (json.error.keyPattern.email) {
+                            this.email_error = `email is already in use`
+                        }
+
+                        if (json.error.keyPattern.phonenumber) {
+                            this.phonenum_error = `phone number is already in use`
+                        }
+                    }
+
+                    throw 'there is an error here';
+                } else {
+                    this.loading = false;
+                    const user = json.user;
+                    const token = json.token;
+                    this.setUser(user, token);
+                }
+            })
+            .then(() => {
+                this.$router.push('/accountsummary');
+                console.log('logged in')
+            })
+            .catch(err => console.log(err, 'there is an errro'));
+        }, 
+        toggleInputClass(key) {
+            this.$refs[`${key}`].style.borderBottom = `1px solid #000000`;
+        },
+        submit() {
+            const {
+                firstname,
+                lastname,
+                email,
+                phonenumber,
+                iban,
+                password,
+                confirmpassword
+            } = this;
+
+            const inputs = {
+                firstname,
+                lastname,
+                email,
+                phonenumber,
+                iban,
+                password,
+                confirmpassword
+            }
+
+            for (const key in inputs) {
+                if (inputs[key].length === 0) {
+                    this.$refs[`${key}`].style.borderBottom = `1px solid red`;
+
+                    this.error = true;
+                }
+            }
+
+            if (!this.termsagreed) {
+                this.error = true;
+                this.termsagreed_error = 'terms of service should be adhered to';
+            }
+
+            if (!this.error) {
+                this.authenticate({
+                    firstname,
+                    lastname,
+                    email,
+                    phonenumber,
+                    iban,
+                    password,
+                    confirmpassword
+                }, 'api/signup')
+            }
+        }
+    },
+    watch: {
+        firstname() {
+            this.error= false;
+            this.toggleInputClass('firstname');
+        },
+        lastname() {
+            this.error = false;
+            this.toggleInputClass('lastname');
+        },
+        email(newValue, oldValue) {
+            EmailValidator.validate(newValue) ? this.error = false : this.error = 'Invalid email';
+            this.toggleInputClass('email');
+        },
+        iban() {
+            this.error = false;
+            this.toggleInputClass('iban');
+        },
+        phonenumber() {
+            this.error = false;
+            this.toggleInputClass('phonenumber');
+        },
+        password(newValue, oldValue) {
+            this.toggleInputClass('password');
+            if (newValue.length < 6) {
+                    this.password_error = 'password should be 6 characters or more';
+                    this.error = true;
+            } else if (newValue !== this.confirmpassword) {
+                    this.password_error = 'password should equal confirm  password'
+            } else if (newValue === this.confirmpassword) {
+                    this.password_error = false;
+                    this.confirmpassword_error = false;
+                    this.error = true;
+            } else {
+                    this.password_error = false;
+                    this.error = false;
+            }
+        },
+        confirmpassword(newValue, oldValue) {
+            this.toggleInputClass('confirmpassword');
+            if (newValue.length < 6) {
+                this.confirmpassword_error = 'password should be 6 characters or more';
+                this.error = true;
+            } else if (newValue !== this.password) {
+                this.confirmpassword_error = 'confirm password should equal password';
+                this.error = true;
+            } else if (newValue === this.password) {
+                this.password_error = false;
+                this.confirmpassword_error = false;
+                this.error = false;
+            } else {
+                this.confirmpassword_error = false;
+                this.error = false;
+            }
+        },
+        termsagreed(newValue) {
+            if (newValue === false) {
+                this.termsagreed_error = 'terms of service should be adhered to';
+                this.error = true;
+            } else {
+                this.termsagreed_error = false;
+                this.error = false;
+            }
+        }
+    } 
+}
 </script>
 
 <style lang="scss" scoped>
@@ -89,14 +292,6 @@ export default {}
                 }
             }
 
-            &--right {
-
-            }
-
-            &--rightform {
-
-            }
-
             &--rightformarea {
                 margin-bottom: #{scaleValue(35)};
 
@@ -119,7 +314,6 @@ export default {}
 
                     &.terms {
                         text-decoration: underline;
-                        color: #fd4f31;
 
                         @media only screen and (max-width: 414px) {
                             display: inline-block;
@@ -148,9 +342,17 @@ export default {}
             &--rightforminput {
                 margin-left: #{scaleValue(10)};
 
+                &.passwordarea {
+                    display: flex;
+                    flex-direction: column;
+
+                    & input {
+                        width: 100%;
+                    }
+                }
+
                 @media only screen and (max-width: 414px) { 
                    width: 100%;
-                   background: red;
                 }
 
                 & input {
@@ -162,6 +364,10 @@ export default {}
                     padding-bottom: #{scaleValue(10)};
                     outline: none;
 
+                    &.iban {
+                        width: 100%;
+                    }
+
                     @media only screen and (max-width: 414px) { 
                         width: 100%;
                         font-size: #{scaleValue(60)};
@@ -170,5 +376,11 @@ export default {}
                 }
             }
         }
+    }
+
+    .error {
+        display: block;
+        font-size: #{scaleValue(12)};
+        color: red;
     }
 </style>

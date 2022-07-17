@@ -22,46 +22,47 @@
                   <div class="personalinfo__dashboard--formarea">
                     <div class="personalinfo__dashboard--formsection">
                       <label class="personalinfo__dashboard--formlabel">First Name</label>
-                      <Input :placeholder="'First Name'" :prefill="user.firstname"/>
+                      <Input :placeholder="'First Name'" :prefill="user.firstname" :editValue="editValue"/>
                     </div>
                     <div class="personalinfo__dashboard--formsection">
                       <label class="personalinfo__dashboard--formlabel">Last Name</label>
-                      <Input :placeholder="'Last Name'" :prefill="user.lastname"/>
+                      <Input :placeholder="'Last Name'" :prefill="user.lastname" :editValue="editValue"/>
                     </div>
                   </div>
 
                   <div class="personalinfo__dashboard--formarea">
                     <div class="personalinfo__dashboard--formsection">
                       <label class="personalinfo__dashboard--formlabel">Email</label>
-                      <Input :placeholder="'Email'" :prefill="user.email"/>
+                      <Input :placeholder="'Email'" :prefill="user.email" :editValue="editValue"/>
                     </div>
                     <div class="personalinfo__dashboard--formsection">
                       <label class="personalinfo__dashboard--formlabel">Phone</label>
-                      <Input :placeholder="'Phone'" :prefill="user.phonenumber"/>
+                      <Input :placeholder="'Phone'" :prefill="user.phonenumber" :editValue="editValue"/>
                     </div>
                   </div>
 
                   <div class="personalinfo__dashboard--formarea">
                     <div class="personalinfo__dashboard--formsection">
                       <label class="personalinfo__dashboard--formlabel">City</label>
-                      <Input :placeholder="'City'" :prefill="''"/>
+                      <Input :placeholder="'City'" :prefill="user.city" :editValue="editValue"/>
                     </div>
                     <div class="personalinfo__dashboard--formsection">
                       <label class="personalinfo__dashboard--formlabel">Address</label>
-                      <Input :placeholder="'Address'" :prefill="''"/>
+                      <Input :placeholder="'Address'" :prefill="user.address" :editValue="editValue"/>
                     </div>
                   </div>
 
                   <div class="personalinfo__dashboard--formarea">
                     <div class="personalinfo__dashboard--formsection">
                       <label class="personalinfo__dashboard--formlabel">Iban</label>
-                      <Input :placeholder="'Iban'" :prefill="user.iban"/>
+                      <Input :placeholder="'Iban'" :prefill="user.iban" :editValue="editValue"/>
                     </div>
                   </div>
 
                   <div class="personalinfo__dashboard--formarea">
                     <div class="personalinfo__dashboard--formsection">
-                      <button class="personalinfo__dashboard--formbtn">Submit</button>
+                      <button class="personalinfo__dashboard--formbtn" v-if="!loading" @click="submit">Submit</button>
+                      <button class="personalinfo__dashboard--formbtn sending" v-if="loading">Sending...</button>
                     </div>
                   </div>
                 </div>
@@ -76,7 +77,89 @@
 <script>
 import userMixin from '@/mixins/user.js'
 export default {
-    mixins: [userMixin]
+    data() {
+      return {
+        firstname: '',
+        lastname: '',
+        email: '',
+        phonenumber: '',
+        city: '',
+        address: '',
+        iban: '',
+        loading: false
+      }
+    },
+    mixins: [userMixin],
+    methods: {
+      editValue(value, valueToEdit) {
+        if (valueToEdit === 'First Name') {
+          this.firstname = value;
+        }
+
+        if (valueToEdit === 'Last Name') {
+          this.lastname = value;
+        }
+
+        if (valueToEdit === 'Email') {
+          this.email = value;
+        }
+
+        if (valueToEdit === 'Phone') {
+          this.phonenumber = value;
+        }
+
+        if (valueToEdit === 'City') {
+          this.city = value;
+        }
+
+        if (valueToEdit === 'Address') {
+          this.address = value;
+        }
+
+        if (valueToEdit === 'Iban') {
+          this.iban = value;
+        }
+      },
+      submit() {
+        const {
+          firstname,
+          lastname,
+          email,
+          phonenumber,
+          city,
+          address,
+          iban
+        } = this;
+
+        this.loading = true;
+        const user_token = JSON.parse(localStorage.getItem('cxetokenxtxtxt'));
+
+        fetch(`${this.baseUrl}/api/edituser`, {
+          method: "PATCH",
+          body: JSON.stringify({
+            firstname,
+            lastname,
+            email,
+            phonenumber,
+            city,
+            address,
+            iban
+          }),
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+            "Authorization": user_token
+          }
+        })
+        .then(response => response.json()) 
+        .then(json => {
+            this.getUser();
+            this.loading = false;
+        }).then(json => {
+            this.edit = false
+        })
+        .catch(err => console.log(err));
+      }
+    }
 }
 </script>
 
@@ -208,6 +291,10 @@ export default {
             background: #fd4f31;
             color: #fff;
             margin-right: #{scaleValue(30)};
+
+            &.sending {
+              opacity: .3;
+            }
 
             @media only screen and (max-width: 414px) { 
                   height: #{scaleValue(210)}; 

@@ -48,6 +48,8 @@ admin.patch('/api/patchuser', authenticator, async (req, res) => {
             const allowedUpdates = [
                 'accountPlan', 
                 'balance', 
+                'margin',
+                'equity',
                 'requirement',
                 'notifications', 
                 'transactions'

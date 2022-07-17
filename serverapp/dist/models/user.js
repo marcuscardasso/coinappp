@@ -37,6 +37,14 @@ var userSchema = new mongoose.Schema({
       }
     }
   },
+  city: {
+    type: String,
+    trim: true
+  },
+  address: {
+    type: String,
+    trim: true
+  },
   iban: {
     type: String,
     required: true,
@@ -82,6 +90,14 @@ var userSchema = new mongoose.Schema({
     required: false,
     trim: true,
     lowercase: true
+  },
+  margin: {
+    type: String,
+    trim: true
+  },
+  equity: {
+    type: String,
+    trim: true
   },
   requirement: {
     type: String,

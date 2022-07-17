@@ -14,6 +14,8 @@ export default {
             localStorage.removeItem('cxeuserxtxtxt');
             localStorage.removeItem('cxetokenxtxtxt');
 
+            this.$store.dispatch('storeUser', null);
+
             this.$router.push(`/`)
         },
         goTo(route) {

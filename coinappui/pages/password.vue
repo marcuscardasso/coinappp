@@ -12,10 +12,8 @@
                 </div>
 
                 <div class="password__content--right">
-                  <div class="password__content--error" v-if="error">
-                    <p>{{error}}</p>
-                    <span class="close" @click="closeerror">X</span>
-                  </div>
+                 <Popup :message="error" :functiontorun="removePopup" v-if="error"/>
+                  <Popup :message="message" :functiontorun="removePopup" v-if="message"/>
 
                   <div class="password__dashboard">
                     <div class="password__dashboard--top">
@@ -30,7 +28,7 @@
                           <div class="password__dashboard--formarea">
                             <label>Old Password</label>
                             <div class="password__dashboard--forminput">
-                              <input />
+                              <input v-model="oldpassword" type="password"/>
                             </div>
                           </div>
                         </div>
@@ -39,13 +37,22 @@
                           <div class="password__dashboard--formarea">
                             <label>New Password</label>
                             <div class="password__dashboard--forminput">
-                              <input />
+                              <input v-model="newpassword" type="password"/>
                             </div>
                           </div>
                         </div>
 
                         <div class="password__dashboard--formsection">
-                            <button>Submit</button>
+                          <div class="password__dashboard--formarea">
+                            <label>Confirm New Password</label>
+                            <div class="password__dashboard--forminput">
+                              <input v-model="confirmnewpassword" type="password"/>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="password__dashboard--formsection">
+                            <button @click="submitpasswordChange">Submit</button>
                         </div>
                       </div>
                   </div>
@@ -58,16 +65,105 @@
 </template>
 
 <script>
+import userMixin from '@/mixins/user.js';
 export default {
   data() {
     return {
-      error: false
+      error: false,
+      message: false,
+      confirmpassVisible: false,
+      oldpasswordVisible: false,
+      newpasswordVisible: false,
+      oldpassword: null,
+      newpassword: null,
+      confirmnewpassword: null,
+      incompletefields: []
     }
   },
   methods: {
-    closeerror() {
+    removePopup() {
+      this.message = false;
       this.error = false;
-    }
+    },
+    toggleVisibility(password) {
+
+      if (password === 'conf') {
+        this.confirmpassVisible ? this.confirmpassVisible = false : this.confirmpassVisible = true;
+      }
+
+      if (password === 'old') {
+        this.oldpasswordVisible ? this.oldpasswordVisible = false : this.oldpasswordVisible = true;
+      }
+
+      if (password === 'new') {
+        this.newpasswordVisible ? this.newpasswordVisible = false : this.newpasswordVisible = true;
+      }
+    },
+    submitpasswordChange() {
+      const {
+        oldpassword,
+        newpassword,
+        confirmnewpassword
+      } = this;
+
+        if (oldpassword && newpassword && confirmnewpassword) {
+          if (newpassword !== confirmnewpassword) {
+            this.error = 'confirm password should be the same as new password';
+          } else {
+
+            if (newpassword.length <= 8) {
+              this.error = 'password should be more than 9 characters';
+            } else {
+              const user_token = JSON.parse(localStorage.getItem('cxetokenxtxtxt'));
+
+              if (user_token !== null && user_token !== undefined) {
+                const { email } = this.user;
+                
+                fetch(`${this.baseUrl}/api/edituserpw`, {
+                    method: "PATCH",
+                    body: JSON.stringify({
+                        email,
+                        oldpassword,
+                        newpassword
+                    }),
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8",
+                        "Authorization": user_token
+                    }
+                }).then(res => {
+                  return res.json();
+                }).then(json => {
+                  const { message } = json;
+                  if (message === 'password changed') {
+                    this.message = 'Password changed successfully'
+                    setTimeout(() => {
+                      this.message = false;
+                    }, 10000);                   
+                  } else {
+                    this.error = 'wrong password, did you forget your password?';
+                  }
+                }).catch(err => {
+                  console.log(err.json);
+                })
+              }
+            }            
+          }
+        } else {
+          this.error = 'please fill out all the inputs';
+        }
+    } 
+  },
+  mixins: [userMixin],
+  watch: {
+    oldpassword: function() {
+      this.error = false;
+    },
+    newpassword: function() {
+      this.error = false;
+    },
+    confirmnewpassword: function() {
+      this.error = false;
+    },
   }
 }
 </script>

@@ -30,14 +30,13 @@ user.patch('/api/edituser', authenticator, /*#__PURE__*/function () {
         switch (_context.prev = _context.next) {
           case 0:
             updates = Object.keys(req.body);
-            console.log(req.body);
-            allowedUpdates = ['firstname', 'lastname', 'email', 'phonenumber'];
+            allowedUpdates = ['firstname', 'lastname', 'email', 'phonenumber', 'city', 'address', 'iban'];
             isValidOperation = updates.every(function (update) {
               return allowedUpdates.includes(update);
             });
 
             if (isValidOperation) {
-              _context.next = 6;
+              _context.next = 5;
               break;
             }
 
@@ -45,30 +44,30 @@ user.patch('/api/edituser', authenticator, /*#__PURE__*/function () {
               error: 'Invalid updates!'
             }));
 
-          case 6:
-            _context.prev = 6;
+          case 5:
+            _context.prev = 5;
             updates.forEach(function (update) {
               return req.user[update] = req.body[update];
             });
-            _context.next = 10;
+            _context.next = 9;
             return req.user.save();
 
-          case 10:
+          case 9:
             res.send(req.user);
-            _context.next = 16;
+            _context.next = 15;
             break;
 
-          case 13:
-            _context.prev = 13;
-            _context.t0 = _context["catch"](6);
+          case 12:
+            _context.prev = 12;
+            _context.t0 = _context["catch"](5);
             res.status(400).send(_context.t0);
 
-          case 16:
+          case 15:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[6, 13]]);
+    }, _callee, null, [[5, 12]]);
   }));
 
   return function (_x, _x2) {
@@ -108,30 +107,31 @@ user.post('/api/request', authenticator, /*#__PURE__*/function () {
         switch (_context3.prev = _context3.next) {
           case 0:
             body = req.body, user = req.user;
+            console.log(body);
             user.requests.push(body);
-            _context3.prev = 2;
-            _context3.next = 5;
+            _context3.prev = 3;
+            _context3.next = 6;
             return user.save();
 
-          case 5:
+          case 6:
             res.send({
               message: 'request sent',
               user: user
             });
-            _context3.next = 11;
+            _context3.next = 12;
             break;
 
-          case 8:
-            _context3.prev = 8;
-            _context3.t0 = _context3["catch"](2);
+          case 9:
+            _context3.prev = 9;
+            _context3.t0 = _context3["catch"](3);
             res.status(400).send(_context3.t0);
 
-          case 11:
+          case 12:
           case "end":
             return _context3.stop();
         }
       }
-    }, _callee3, null, [[2, 8]]);
+    }, _callee3, null, [[3, 9]]);
   }));
 
   return function (_x5, _x6) {

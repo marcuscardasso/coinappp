@@ -10,9 +10,16 @@ import User from '../models/user';
 
 user.patch('/api/edituser', authenticator, async (req, res) => {
 
-    const updates = Object.keys(req.body)
-    console.log(req.body)
-    const allowedUpdates = ['firstname', 'lastname', 'email', 'phonenumber'];
+    const updates = Object.keys(req.body);
+    const allowedUpdates = [
+        'firstname', 
+        'lastname', 
+        'email', 
+        'phonenumber',
+        'city',
+        'address',
+        'iban'
+    ];
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
 
     if (!isValidOperation) {
@@ -38,6 +45,7 @@ user.get('/api/getuser', authenticator, async (req, res) => {
 
 user.post('/api/request', authenticator, async (req, res) => {
     const { body, user } = req;
+    console.log(body)
     user.requests.push(body);
 
     try {

@@ -16,9 +16,14 @@ export default {
             value: ''
         }
     },
-    props: ['placeholder', 'prefill'],
+    props: ['placeholder', 'prefill', 'editValue'],
     mounted() {
         this.prefill ? this.value = this.prefill : ''
+    },
+    watch: {
+        value(newValue, oldValue) {
+            this.editValue(newValue, this.placeholder);
+        }
     }
 }
 </script>
@@ -28,7 +33,7 @@ export default {
     @return calc(
       #{$value} * (clamp(350px, 100vw, 3840px) / var(--ideal-viewport-width))
     );
-}
+} 
 
 .input {
     position: relative;

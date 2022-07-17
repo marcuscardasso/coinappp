@@ -39,7 +39,7 @@ export default {
 
     .popup {
         position: absolute;
-        width: 100vw;
+        width: 100%;
         top: 0;
         left: 0;
         

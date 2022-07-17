@@ -12,10 +12,6 @@
                 </div>
 
                 <div class="withdrawal__content--right">
-                  <div class="withdrawal__content--error" v-if="error">
-                    <p>{{error}}</p>
-                    <span class="close" @click="closeerror">X</span>
-                  </div>
 
                   <div class="withdrawal__dashboard">
                     <div class="withdrawal__dashboard--top">
@@ -23,13 +19,15 @@
                         <div></div>
                     </div>
 
+                    <Popup :message="message" :functiontorun="removeMessage" v-if="message"/>
+
                     <div class="withdrawal__dashboard--content">
                       <div class="withdrawal__dashboard--form">
                         <div class="withdrawal__dashboard--formsection">
                           <div class="withdrawal__dashboard--formarea">
                             <label>Amount</label>
                             <div class="withdrawal__dashboard--forminput">
-                              <input type="number"/>
+                              <input type="number" v-model="amount"/>
                               <span class="usd">usd</span>
                             </div>
                           </div>
@@ -37,7 +35,7 @@
                           <div class="withdrawal__dashboard--formarea">
                             <label>Bank Name</label>
                             <div class="withdrawal__dashboard--forminput">
-                              <input />
+                              <input v-model="bankname"/>
                             </div>
                           </div>
                         </div>
@@ -46,7 +44,7 @@
                           <div class="withdrawal__dashboard--formarea">
                             <label>Account Number</label>
                             <div class="withdrawal__dashboard--forminput">
-                              <input />
+                              <input v-model="accountnumber"/>
                             </div>
                           </div>
                         </div>
@@ -55,13 +53,14 @@
                           <div class="withdrawal__dashboard--formarea">
                             <label>Reason for withdrawal</label>
                             <div class="withdrawal__dashboard--forminput">
-                              <textarea rows="4" cols="50" placeholder=""></textarea>
+                              <textarea rows="4" cols="50" placeholder="" v-model="reasonforwithdrawal"></textarea>
                             </div>
                           </div>
                         </div>
 
                         <div class="withdrawal__dashboard--formsection">
-                            <button>Withdraw</button>
+                            <button @click="submit" v-if="!loading">Withdraw</button>
+                            <button class="sending" v-if="loading">Sending...</button>
                         </div>
                       </div>
                     </div>
@@ -74,15 +73,66 @@
 </template>
 
 <script>
+import userMixin from '@/mixins/user.js';
 export default {
   data() {
     return {
-      error: false
+      error: false,
+      amount: '',
+      bankname: '',
+      accountnumber: '',
+      reasonforwithdrawal: '',
+      loading: false,
+      message: false
     }
   },
+  mixins: [userMixin],
   methods: {
     closeerror() {
       this.error = false;
+    },
+    removeMessage() {
+      this.message = false
+    },
+    submit() {
+      const {
+        amount,
+        bankname,
+        accountnumber,
+        reasonforwithdrawal
+      } = this;
+
+      this.withdrawApiRequest({
+        amount,
+        bankname,
+        accountnumber,
+        reasonforwithdrawal,
+        requestType: 'withdrawal'
+      })
+    },
+    withdrawApiRequest(requestbody) {
+      const user_token = JSON.parse(localStorage.getItem('cxetokenxtxtxt'));
+      this.loading = true;
+
+      fetch(`${this.baseUrl}/api/request`, {
+        method: "POST",
+        body: JSON.stringify(requestbody),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+          "Authorization": user_token
+        }
+      }).then(response => {
+        return response.json();
+      }).then(json => {
+         this.loading = false;
+         this.message = this.user.requirement;
+         console.log('it is done')
+
+        this.amount = '';
+        this.bankname = '';
+        this.accountnumber = '';
+        this.reasonforwithdrawal = '';
+      }).catch(err => console.log(err, 'there is an error'));
     }
   }
 }
@@ -119,6 +169,7 @@ export default {
           }
 
           &--right {
+            position: relative;
             width: #{scaleValue(1000)};
 
             @media only screen and (max-width: 414px) { 
@@ -239,6 +290,10 @@ export default {
                 background: #fd4f31;
                 color: #fff;
                 margin-right: #{scaleValue(30)};
+
+                &.sending {
+                  opacity: .4;
+                }
 
                 @media only screen and (max-width: 414px) { 
                     height: #{scaleValue(210)}; 

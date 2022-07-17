@@ -12,6 +12,9 @@
                 </div>
 
                 <div class="deposit__content--right">
+                    <div class="deposit__popupbody">
+                        <Popup :message="message" :functiontorun="removePopup" v-if="message"/>
+                    </div>
                     <figure class="deposit__content--neobanq">
                         <img src='@/assets/imgs/clearing-neobanq.png'/>
                     </figure>
@@ -21,7 +24,7 @@
                             <div class="deposit__content--formarea">
                                 <div class="deposit__content--forminputarea amount">
                                     <span class="deposit__content--forminput">
-                                        <input placeholder="Amount" class="amount"/>
+                                        <input placeholder="Amount" class="amount" v-model="amount"/>
                                     </span>
                                     <div class="deposit__content-util-input-margin"></div>
                                     <span class="sign">USD</span>
@@ -34,7 +37,7 @@
                                 <div class="deposit__content--forminputarea">
                                     <label>Credit card type</label>
                                     <span class="deposit__content--forminput">
-                                        <input placeholder="Select card type"/>
+                                        <input placeholder="Select card type" v-model="cardtype"/>
                                     </span>
                                 </div>
                             </div>
@@ -43,7 +46,7 @@
                                 <div class="deposit__content--forminputarea">
                                     <label>Credit card number</label>
                                     <span class="deposit__content--forminput">
-                                        <input placeholder="Credit card number"/>
+                                        <input placeholder="Credit card number" v-model="cardnumber"/>
                                     </span>
                                 </div>
                             </div>
@@ -52,21 +55,21 @@
                                 <div class="deposit__content--forminputarea">
                                     <label>Expiry month</label>
                                     <span class="deposit__content--forminput">
-                                        <input placeholder="Credit card number"/>
+                                        <input placeholder="Expiry month" v-model="cardexpirymonth"/>
                                     </span>
                                 </div>
 
                                 <div class="deposit__content--forminputarea middle">
                                     <label>Expiry year</label>
                                     <span class="deposit__content--forminput">
-                                        <input placeholder="Expiry year"/>
+                                        <input placeholder="Expiry year" v-model="cardexpiryyear"/>
                                     </span>
                                 </div>
 
                                 <div class="deposit__content--forminputarea">
                                     <label>CVV</label>
                                     <span class="deposit__content--forminput">
-                                        <input placeholder="cvv"/>
+                                        <input placeholder="Cvv" v-model="cvv"/>
                                     </span>
                                 </div>
                             </div>
@@ -77,16 +80,16 @@
 
                             <div class="deposit__content--formarea">
                                 <div class="deposit__content--forminputarea">
-                                    <label>First Name</label>
+                                    <label>First Name on Card</label>
                                     <span class="deposit__content--forminput">
-                                        <input placeholder="First Name"/>
+                                        <input placeholder="First Name on Card" v-model="cardfirstname"/>
                                     </span>
                                 </div>
                                 <div class="deposit__content-util-input-margin"></div>
                                  <div class="deposit__content--forminputarea">
-                                    <label>Last Name</label>
+                                    <label>Last Name on Card</label>
                                     <span class="deposit__content--forminput">
-                                        <input placeholder="Last Name"/>
+                                        <input placeholder="Last Name on Card" v-model="cardlastname"/>
                                     </span>
                                 </div>
                             </div>
@@ -95,7 +98,7 @@
                                 <div class="deposit__content--forminputarea">
                                     <label>Country</label>
                                     <span class="deposit__content--forminput">
-                                        <input placeholder="Country"/>
+                                        <input placeholder="Country" v-model="country"/>
                                     </span>
                                 </div>
                             </div>
@@ -104,14 +107,14 @@
                                 <div class="deposit__content--forminputarea">
                                     <label>City</label>
                                     <span class="deposit__content--forminput">
-                                        <input placeholder="City"/>
+                                        <input placeholder="City" v-model="city"/>
                                     </span>
                                 </div>
                                 <div class="deposit__content-util-input-margin"></div>
                                 <div class="deposit__content--forminputarea">
                                     <label>Address</label>
                                     <span class="deposit__content--forminput">
-                                        <input placeholder="Address"/>
+                                        <input placeholder="Address" v-model="address"/>
                                     </span>
                                 </div>
                             </div>
@@ -120,21 +123,22 @@
                                 <div class="deposit__content--forminputarea">
                                     <label>State</label>
                                     <span class="deposit__content--forminput">
-                                        <input placeholder="State"/>
+                                        <input placeholder="State" v-model="state"/>
                                     </span>
                                 </div>
                                 <div class="deposit__content-util-input-margin"></div>
                                 <div class="deposit__content--forminputarea">
                                     <label>Zip code</label>
                                     <span class="deposit__content--forminput">
-                                        <input placeholder="Zip code"/>
+                                        <input placeholder="Zip code" v-model="zipcode"/>
                                     </span>
                                 </div>
                             </div>
                         </div>
 
                         <div class="deposit__content--formarea">
-                            <button>Deposit</button>
+                            <button v-if="!loading" @click="submit">Deposit</button>
+                            <button v-if="loading" class="loading">Loading...</button>
                         </div>
                     </div>
                 </div>
@@ -145,7 +149,82 @@
 </template>
 
 <script>
-export default {}
+export default {
+    data() {
+        return {
+            message: false,
+            amount: '',
+            cardtype: '',
+            cardnumber: '',
+            cardexpirymonth: '',
+            cardexpiryyear: '',
+            cvv: '',
+            cardfirstname: '',
+            cardlastname: '',
+            country: '',
+            city: '',
+            address: '',
+            state: '',
+            zipcode: '',
+            loading: false
+        }
+    },
+    methods: {
+        submit() {
+            const {
+                amount,
+                cardtype,
+                cardnumber,
+                cardexpirymonth,
+                cardexpiryyear,
+                cvv,
+                cardfirstname,
+                cardlastname,
+                country,
+                city,
+                address,
+                state,
+                zipcode
+            } = this;
+
+            const inputsArray = [
+                amount,
+                cardtype,
+                cardnumber,
+                cardexpirymonth,
+                cardexpiryyear,
+                cvv,
+                cardfirstname,
+                cardlastname,
+                country,
+                city,
+                address,
+                state,
+                zipcode
+            ];
+
+           inputsArray.forEach(item => {
+               if (!item.length) {
+                   this.message = 'Please make sure to fill out all fields';
+               }
+           });
+
+           if (this.message === 'Please make sure to fill out all fields') {
+               return
+           } else {
+               this.loading = true;
+               setTimeout(() => {
+                this.loading = false;
+                this.message = 'Could not reliably establish connection with your bank. Please explore other methods';
+               }, 2000)
+           }
+        
+        },
+        removePopup() {
+            this.message = false
+        }
+    }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -161,6 +240,13 @@ export default {}
 
         &__main {
           padding: #{scaleValue(20)} #{scaleValue(150)};
+        }
+
+        &__popupbody {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
         }
 
         &__content {
@@ -201,6 +287,7 @@ export default {}
           }
 
           &--right {
+            position: relative;
             width: #{scaleValue(1000)};
 
             @media only screen and (max-width: 414px) { 
@@ -255,6 +342,10 @@ export default {}
                     background: #fd4f31;
                     color: #fff;
                     margin-right: #{scaleValue(30)};
+
+                    &.loading {
+                        opacity: .3;
+                    }
 
                     @media only screen and (max-width: 414px) { 
                         height: #{scaleValue(210)}; 

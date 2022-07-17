@@ -3,7 +3,7 @@
 var mongoose = require('mongoose');
 
 var contactSchema = new mongoose.Schema({
-  name: {
+  fullname: {
     type: String,
     required: true,
     trim: true
@@ -14,6 +14,11 @@ var contactSchema = new mongoose.Schema({
     "default": false
   },
   message: {
+    type: String,
+    required: true,
+    "default": false
+  },
+  phone: {
     type: String,
     required: true,
     "default": false
