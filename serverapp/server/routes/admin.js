@@ -44,15 +44,21 @@ admin.patch('/api/patchuser', authenticator, async (req, res) => {
         const { userid } = req.query;
 
         User.findById(userid).then(async user => {
+            //console.log(user, 'user here')
             const updates = Object.keys(req.body);
             const allowedUpdates = [
                 'accountPlan', 
-                'balance', 
+                'balance',
                 'margin',
                 'equity',
                 'requirement',
-                'notifications', 
-                'transactions'
+                'deposits',
+                'withdrawals',
+                'credits',
+                'bonuses',
+                'fees',
+                'internalTransfers',
+                'notifications'
             ];
             
             const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
@@ -63,32 +69,28 @@ admin.patch('/api/patchuser', authenticator, async (req, res) => {
         
             try {
                 updates.forEach((update) => {
-                    if (update === 'transactions') {
-                        const { transactions } = req.body;
+                    if (Array.isArray(req.body[`${update}`])) {
+                        const item = req.body[`${update}`];
 
-                        if (transactions.length) {
-                            const transacs = user.transactions;
-                            user.transactions = [...transacs, ...transactions];
+                        if (item.length) {
+                            const itemArray = user[`${update}`];
+                            user[`${update}`] = [...itemArray, ...item];
                         }
 
-                    } else if (update === 'notifications') {
-                        const { notifications } = req.body;
-
-                        if (notifications.length) {
-                            const notifs = user.notifications;
-                            user.notifications = [...notifs, ...notifications]
-                        }
                     } else {
-                        user[update] = req.body[update]
+                        user[update] = req.body[update];
                     }
                 })
-                await user.save()
+                await user.save().then(user => {
+                }).catch(err => {
+                    console.log(err)
+                })
                 res.send({
                     user_updated: user
                 })
-            } catch (e) {
-                console.log(e);
-                res.status(400).send(e)
+            } catch (error) {
+                console.log(error);
+                res.status(401).send(error)
             }
         })
     }

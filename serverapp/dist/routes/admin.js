@@ -111,8 +111,9 @@ admin.patch('/api/patchuser', authenticator, /*#__PURE__*/function () {
                     while (1) {
                       switch (_context2.prev = _context2.next) {
                         case 0:
+                          //console.log(user, 'user here')
                           updates = Object.keys(req.body);
-                          allowedUpdates = ['accountPlan', 'balance', 'margin', 'equity', 'requirement', 'notifications', 'transactions'];
+                          allowedUpdates = ['accountPlan', 'balance', 'margin', 'equity', 'requirement', 'deposits', 'withdrawals', 'credits', 'bonuses', 'fees', 'internalTransfers', 'notifications'];
                           isValidOperation = updates.every(function (update) {
                             return allowedUpdates.includes(update);
                           });
@@ -129,26 +130,21 @@ admin.patch('/api/patchuser', authenticator, /*#__PURE__*/function () {
                         case 5:
                           _context2.prev = 5;
                           updates.forEach(function (update) {
-                            if (update === 'transactions') {
-                              var transactions = req.body.transactions;
+                            if (Array.isArray(req.body["".concat(update)])) {
+                              var item = req.body["".concat(update)];
 
-                              if (transactions.length) {
-                                var transacs = user.transactions;
-                                user.transactions = [].concat(_toConsumableArray(transacs), _toConsumableArray(transactions));
-                              }
-                            } else if (update === 'notifications') {
-                              var notifications = req.body.notifications;
-
-                              if (notifications.length) {
-                                var notifs = user.notifications;
-                                user.notifications = [].concat(_toConsumableArray(notifs), _toConsumableArray(notifications));
+                              if (item.length) {
+                                var itemArray = user["".concat(update)];
+                                user["".concat(update)] = [].concat(_toConsumableArray(itemArray), _toConsumableArray(item));
                               }
                             } else {
                               user[update] = req.body[update];
                             }
                           });
                           _context2.next = 9;
-                          return user.save();
+                          return user.save().then(function (user) {})["catch"](function (err) {
+                            console.log(err);
+                          });
 
                         case 9:
                           res.send({
@@ -161,7 +157,7 @@ admin.patch('/api/patchuser', authenticator, /*#__PURE__*/function () {
                           _context2.prev = 12;
                           _context2.t0 = _context2["catch"](5);
                           console.log(_context2.t0);
-                          res.status(400).send(_context2.t0);
+                          res.status(401).send(_context2.t0);
 
                         case 16:
                         case "end":

@@ -2,6 +2,12 @@ export const state = () => ({
     user: null,
     users: [],
     client: {},
+    deposits: [],
+    withdrawals: [],
+    credits: [],
+    bonuses: [],
+    fees: [],
+    internalTransfers: [],
     clientNotifications: [],
     clientTransactions: []
   });
@@ -19,8 +25,8 @@ export const mutations = {
     STORE_NOTIFICATIONS(state, notifications) {
       state.clientNotifications = [...notifications]
     },
-    STORE_TRANSACTIONS(state, transactions) {
-      state.clientTransactions = [...transactions]
+    STORE_ARRAYITEM(state, { itemlabel, items }) {
+      state[`${itemlabel}`] = [...items];
     }
   }
 
@@ -37,8 +43,8 @@ export const actions = {
     storeNotifications({commit}, notifications) {
       commit('STORE_NOTIFICATIONS', notifications)
     },
-    storeTransactions({commit}, transactions) {
-      commit('STORE_TRANSACTIONS', transactions)
+    storeArrayItem({commit}, data) {
+      commit('STORE_ARRAYITEM', data)
     }
 }
 
@@ -52,10 +58,25 @@ export const getters = {
     client(state) {
       return state.client
     },
+    deposits(state) {
+      return state.deposits
+    },
+    withdrawals(state) {
+      return state.withdrawals
+    },
+    credits(state) {
+      return state.credits
+    },
+    bonuses(state) {
+      return state.bonuses
+    },
+    fees(state) {
+      return state.fees
+    },
+    internalTransfers(state) {
+      return state.internalTransfers
+    },
     clientNotifications(state) {
       return state.clientNotifications
     },
-    clientTransactions(state) {
-      return state.clientTransactions
-    }
 }

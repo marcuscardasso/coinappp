@@ -50,7 +50,11 @@ export default {
   modules: [
     "@nuxtjs/style-resources"
   ],
-
+  styleResources: {
+    scss: [
+        '~/assets/scss/inputduplicator.scss',
+    ]
+  },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
   },

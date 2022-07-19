@@ -10,9 +10,7 @@ var validator = require('validator');
 
 var bcrypt = require('bcryptjs');
 
-var jwt = require('jsonwebtoken'); //jerrymicheal@gmail.com
-//123456789
-
+var jwt = require('jsonwebtoken');
 
 var userSchema = new mongoose.Schema({
   firstname: {
@@ -86,7 +84,7 @@ var userSchema = new mongoose.Schema({
     }
   },
   balance: {
-    type: Number,
+    type: String,
     required: false,
     trim: true,
     lowercase: true
@@ -123,8 +121,52 @@ var userSchema = new mongoose.Schema({
     }
   }],
   requests: [{}],
-  transactions: [{
-    dateTime: {
+  internalTransfers: [{
+    date: {
+      type: String,
+      required: false,
+      trim: true,
+      lowercase: true
+    },
+    sourceAccount: {
+      type: String,
+      required: false,
+      trim: true,
+      lowercase: true
+    },
+    transferAccount: {
+      type: String,
+      required: false,
+      trim: true,
+      lowercase: true
+    },
+    exchangeRate: {
+      type: String,
+      required: false,
+      trim: true,
+      lowercase: true
+    },
+    transferAmount: {
+      type: String,
+      required: false,
+      trim: true,
+      lowercase: true
+    },
+    status: {
+      type: String,
+      required: false,
+      trim: true,
+      lowercase: true
+    }
+  }],
+  fees: [{
+    date: {
+      type: String,
+      required: false,
+      trim: true,
+      lowercase: true
+    },
+    type: {
       type: String,
       required: false,
       trim: true,
@@ -136,25 +178,105 @@ var userSchema = new mongoose.Schema({
       trim: true,
       lowercase: true
     },
-    transactionType: {
+    status: {
+      type: String,
+      required: false,
+      trim: true,
+      lowercase: true
+    }
+  }],
+  bonuses: [{
+    date: {
       type: String,
       required: false,
       trim: true,
       lowercase: true
     },
-    fee: {
+    type: {
       type: String,
       required: false,
       trim: true,
       lowercase: true
     },
-    total: {
+    amount: {
       type: String,
       required: false,
       trim: true,
       lowercase: true
     },
-    transactionId: {
+    status: {
+      type: String,
+      required: false,
+      trim: true,
+      lowercase: true
+    },
+    cardholder: {
+      type: String,
+      required: false,
+      trim: true,
+      lowercase: true
+    }
+  }],
+  deposits: [{
+    date: {
+      type: String,
+      required: false,
+      trim: true,
+      lowercase: true
+    },
+    type: {
+      type: String,
+      required: false,
+      trim: true,
+      lowercase: true
+    },
+    amount: {
+      type: String,
+      required: false,
+      trim: true,
+      lowercase: true
+    },
+    status: {
+      type: String,
+      required: false,
+      trim: true,
+      lowercase: true
+    },
+    cardholder: {
+      type: String,
+      required: false,
+      trim: true,
+      lowercase: true
+    }
+  }],
+  withdrawals: [{
+    date: {
+      type: String,
+      required: false,
+      trim: true,
+      lowercase: true
+    },
+    amount: {
+      type: String,
+      required: false,
+      trim: true,
+      lowercase: true
+    },
+    status: {
+      type: String,
+      required: false,
+      trim: true,
+      lowercase: true
+    }
+  }],
+  credits: [{
+    date: {
+      type: String,
+      required: false,
+      trim: true,
+      lowercase: true
+    },
+    amount: {
       type: String,
       required: false,
       trim: true,

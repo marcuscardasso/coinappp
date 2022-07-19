@@ -31,6 +31,22 @@
                                     <input type="text" v-model="balance"/>
                                 </span>
                             </div>
+                            <div class="profile__contentarea">
+                                <span class="profile__contentarea--label">
+                                    <p>User Margin</p>
+                                </span>
+                                <span class="profile__contentarea--input">
+                                    <input type="text" v-model="margin"/>
+                                </span>
+                            </div>
+                            <div class="profile__contentarea">
+                                <span class="profile__contentarea--label">
+                                    <p>User Equity</p>
+                                </span>
+                                <span class="profile__contentarea--input">
+                                    <input type="text" v-model="equity"/>
+                                </span>
+                            </div>
                         </div> 
                         <div class="profile__section">
                             <div class="profile__contentarea profile__contentarea--stretch">
@@ -44,8 +60,29 @@
                         </div>
 
                         <div class="profile__section">
-                            <InputDuplicator :name="'add transactions'" :clientTransactionsDB="client.transactions"/>
+                            <InputDuplicator :name="'deposits'"/>
                         </div>
+
+                        <div class="profile__section">
+                            <InputDuplicator :name="'withdrawals'"/>
+                        </div>
+
+                        <div class="profile__section">
+                            <InputDuplicator :name="'credits'"/>
+                        </div>
+
+                        <div class="profile__section">
+                            <InputDuplicator :name="'bonuses'"/>
+                        </div>
+
+                        <div class="profile__section">
+                            <InputDuplicator :name="'fees'"/>
+                        </div>
+
+                        <div class="profile__section">
+                            <InputDuplicator :name="'internalTransfers'"/>
+                        </div>
+
                         <div  class="profile__section">
                             <InputDuplicator :name="'add notifications'" :clientNotificationsDB="client.notifications"/>
                         </div>
@@ -70,9 +107,11 @@ import adminMixin from '@/mixins/admin.js'
 export default {
     data() {
         return {
-            accountPlan: null, 
-            balance: null,
-            requirement: null,
+            accountPlan: '', 
+            balance: '',
+            margin: '',
+            equity: '',
+            requirement: '',
             saved: false,
             loading: false
         }
@@ -86,16 +125,30 @@ export default {
             const {
                 accountPlan, 
                 balance,
+                margin,
+                equity,
                 requirement,
-                transactions,
+                deposits,
+                withdrawals,
+                credits,
+                bonuses,
+                fees,
+                internalTransfers,
                 notifications
             } = this;
 
             const changes = {
                 accountPlan, 
                 balance,
+                margin,
+                equity,
                 requirement,
-                transactions,
+                deposits,
+                withdrawals,
+                credits,
+                bonuses,
+                fees,
+                internalTransfers,
                 notifications
             };
 
@@ -144,6 +197,8 @@ export default {
                   this.accountPlan = this.client.accountPlan; 
                   this.balance = this.client.balance;
                   this.client.requirement ? this.requirement = this.client.requirement : this.requirement = '';
+                  this.client.margin ? this.margin = this.client.margin : this.margin = '';
+                  this.client.equity ? this.equity = this.client.equity : this.equity = '';
             });
     },
     computed: {
@@ -153,8 +208,23 @@ export default {
         notifications() {
             return this.$store.getters.clientNotifications
         },
-        transactions() {
-            return this.$store.getters.clientTransactions
+        deposits() {
+            return this.$store.getters.deposits
+        },
+        withdrawals() {
+            return this.$store.getters.withdrawals
+        },
+        credits() {
+            return this.$store.getters.credits
+        },
+        bonuses() {
+            return this.$store.getters.bonuses
+        },
+        fees() {
+            return this.$store.getters.fees
+        },
+        internalTransfers() {
+            return this.$store.getters.internalTransfers
         }
     }
 }

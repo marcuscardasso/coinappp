@@ -37,15 +37,46 @@
                           <label>Cardholder</label>
                         </div>
 
+                        <div v-if="user && current === 'deposits'">
+                          <div class="transactions__dashboard--header headeritem"
+                            v-for="deposit in user.deposits" 
+                            @key="deposit._id">
+                            <label>{{deposit.date}}</label>
+                            <label>{{deposit.type}}</label>
+                            <label>{{deposit.amount}}</label>
+                            <label>{{deposit.status}}</label>
+                            <label>{{deposit.cardholder}}</label>
+                          </div>
+                        </div>
+
                         <div class="transactions__dashboard--header" v-if="current === 'withdrawals'">
                           <label>Date</label>
                           <label>Amount</label>
                           <label>Status</label>
                         </div>
 
+                        <div v-if="user && current === 'withdrawals'">
+                          <div class="transactions__dashboard--header headeritem"
+                            v-for="withdrawal in user.withdrawals" 
+                            @key="withdrawal._id">
+                            <label>{{withdrawal.date}}</label>
+                            <label>{{withdrawal.amount}}</label>
+                            <label>{{withdrawal.status}}</label>
+                          </div>
+                        </div>
+
                         <div class="transactions__dashboard--header" v-if="current === 'credits'">
                           <label>Date</label>
                           <label>Amount</label>
+                        </div>
+
+                        <div v-if="user && current === 'credits'">
+                          <div class="transactions__dashboard--header headeritem"
+                            v-for="credit in user.credits" 
+                            @key="credit._id">
+                            <label>{{credit.date}}</label>
+                            <label>{{credit.amount}}</label>
+                          </div>
                         </div>
 
                         <div class="transactions__dashboard--header" v-if="current === 'bonuses'">
@@ -56,11 +87,34 @@
                           <label>Cardholder</label>
                         </div>
 
+                        <div v-if="user && current === 'bonuses'">
+                          <div class="transactions__dashboard--header headeritem"
+                            v-for="bonus in user.bonuses" 
+                            @key="bonus._id">
+                            <label>{{bonus.date}}</label>
+                            <label>{{bonus.type}}</label>
+                            <label>{{bonus.amount}}</label>
+                            <label>{{bonus.status}}</label>
+                            <label>{{bonus.cardholder}}</label>
+                          </div>
+                        </div>
+
                         <div class="transactions__dashboard--header" v-if="current === 'fees'">
                           <label>Date</label>
                           <label>Type</label>
                           <label>Amount</label>
                           <label>Status</label>
+                        </div>
+
+                        <div v-if="user && current === 'fees'">
+                          <div class="transactions__dashboard--header headeritem"
+                            v-for="fee in user.fees" 
+                            @key="fee._id">
+                            <label>{{fee.date}}</label>
+                            <label>{{fee.type}}</label>
+                            <label>{{fee.amount}}</label>
+                            <label>{{fee.status}}</label>
+                          </div>
                         </div>
 
                         <div class="transactions__dashboard--header" v-if="current === 'internaltrans'">
@@ -71,6 +125,20 @@
                           <label>Transfer Amount</label>
                           <label>Status</label>
                         </div>
+
+                        <div v-if="user && current === 'internaltrans'">
+                          <div class="transactions__dashboard--header headeritem"
+                            v-for="internalTransfer in user.internalTransfers" 
+                            @key="internalTransfer._id">
+                            <label>{{internalTransfer.date}}</label>
+                            <label>{{internalTransfer.sourceAccount}}</label>
+                            <label>{{internalTransfer.transferAccount}}</label>
+                            <label>{{internalTransfer.exchangeRate}}</label>
+                            <label>{{internalTransfer.transferAmount}}</label>
+                            <label>{{internalTransfer.status}}</label>
+                          </div>
+                        </div>
+
                       </div>
                     </div>
                   </div>
@@ -82,12 +150,17 @@
 </template>
 
 <script>
+import userMixin from '@/mixins/user.js'
 export default {
   data() {
     return {
       current: 'deposits'
     }
   },
+  mounted() {
+    this.user
+  },
+  mixins: [userMixin],
   methods: {
     toggleCurrent(value) {
       this.current = value;
@@ -230,9 +303,15 @@ export default {
             color: #fff;
             font-size: #{scaleValue(13)};
             margin-bottom: #{scaleValue(23)};
-
+            justify-content: space-between;
             display: flex;
             align-items: center;
+
+            &.headeritem {
+              background: transparent;
+              color: #000000;
+              border-bottom: 1px solid #000000;
+            }
 
             @media only screen and (max-width: 414px) { 
               flex-direction: column;
@@ -248,7 +327,7 @@ export default {
 
             & label {
               display: inline-block;
-              flex-grow: 1;
+              width: #{scaleValue(170)};
 
               @media only screen and (max-width: 414px) { 
                 font-size: #{scaleValue(50)};
