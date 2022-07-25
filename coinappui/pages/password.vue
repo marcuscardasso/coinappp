@@ -12,8 +12,7 @@
                 </div>
 
                 <div class="password__content--right">
-                 <Popup :message="error" :functiontorun="removePopup" v-if="error"/>
-                  <Popup :message="message" :functiontorun="removePopup" v-if="message"/>
+                 <Popup :popupmessage="popupmessage" :functiontorun="resetPopup" :popupmessageType="popupmessageType" v-if="popupmessage"/>
 
                   <div class="password__dashboard">
                     <div class="password__dashboard--top">
@@ -27,7 +26,7 @@
                         <div class="password__dashboard--formsection">
                           <div class="password__dashboard--formarea">
                             <label>Old Password</label>
-                            <div class="password__dashboard--forminput">
+                            <div class="password__dashboard--forminput" ref="oldpassword">
                               <input v-model="oldpassword" type="password"/>
                             </div>
                           </div>
@@ -36,7 +35,7 @@
                         <div class="password__dashboard--formsection">
                           <div class="password__dashboard--formarea">
                             <label>New Password</label>
-                            <div class="password__dashboard--forminput">
+                            <div class="password__dashboard--forminput" ref="newpassword">
                               <input v-model="newpassword" type="password"/>
                             </div>
                           </div>
@@ -45,14 +44,15 @@
                         <div class="password__dashboard--formsection">
                           <div class="password__dashboard--formarea">
                             <label>Confirm New Password</label>
-                            <div class="password__dashboard--forminput">
+                            <div class="password__dashboard--forminput" ref="confirmnewpassword">
                               <input v-model="confirmnewpassword" type="password"/>
                             </div>
                           </div>
                         </div>
 
                         <div class="password__dashboard--formsection">
-                            <button @click="submitpasswordChange">Submit</button>
+                            <button @click="submitpasswordChange" v-if="!loading">Submit</button>
+                            <button class="loading" v-if="loading">Loading...</button>
                         </div>
                       </div>
                   </div>
@@ -66,24 +66,24 @@
 
 <script>
 import userMixin from '@/mixins/user.js';
+import popupMixin from '@/mixins/popup.js';
 export default {
   data() {
     return {
+      loading: false,
       error: false,
       message: false,
       confirmpassVisible: false,
       oldpasswordVisible: false,
       newpasswordVisible: false,
-      oldpassword: null,
-      newpassword: null,
-      confirmnewpassword: null,
-      incompletefields: []
+      oldpassword: '',
+      newpassword: '',
+      confirmnewpassword: ''
     }
   },
   methods: {
-    removePopup() {
-      this.message = false;
-      this.error = false;
+    toggleInputClass(key) {
+      this.$refs[`${key}`].style.border = `1px solid #000000`;
     },
     toggleVisibility(password) {
 
@@ -106,19 +106,35 @@ export default {
         confirmnewpassword
       } = this;
 
-        if (oldpassword && newpassword && confirmnewpassword) {
+      const inputs = {
+        oldpassword,
+        newpassword,
+        confirmnewpassword
+      }
+
+      for (const key in inputs) {
+        if (inputs[key].length === 0) {
+          this.$refs[`${key}`].style.border = `1px solid red`;
+
+          this.error = true;
+        }
+      }
+
+        if (oldpassword && newpassword && confirmnewpassword && !this.error) {
           if (newpassword !== confirmnewpassword) {
-            this.error = 'confirm password should be the same as new password';
+            this.popupmessage = 'confirm password should be the same as new password';
+            this.popupmessageType = 'error';
           } else {
 
             if (newpassword.length <= 8) {
-              this.error = 'password should be more than 9 characters';
+              this.popupmessage = 'password should be more than 9 characters';
+              this.popupmessageType = 'error';
             } else {
               const user_token = JSON.parse(localStorage.getItem('cxetokenxtxtxt'));
 
               if (user_token !== null && user_token !== undefined) {
                 const { email } = this.user;
-                
+                this.loading = true;
                 fetch(`${this.baseUrl}/api/edituserpw`, {
                     method: "PATCH",
                     body: JSON.stringify({
@@ -135,12 +151,13 @@ export default {
                 }).then(json => {
                   const { message } = json;
                   if (message === 'password changed') {
-                    this.message = 'Password changed successfully'
-                    setTimeout(() => {
-                      this.message = false;
-                    }, 10000);                   
+                    this.popupmessage = 'Password changed successfully'
+                    this.popupmessageType = 'success';
+                    this.loading = false;                  
                   } else {
-                    this.error = 'wrong password, did you forget your password?';
+                    this.popupmessage = 'wrong password, did you forget your password?';
+                    this.popupmessageType = 'error';
+                    this.loading = false;
                   }
                 }).catch(err => {
                   console.log(err.json);
@@ -153,15 +170,18 @@ export default {
         }
     } 
   },
-  mixins: [userMixin],
+  mixins: [userMixin, popupMixin],
   watch: {
     oldpassword: function() {
+      this.toggleInputClass('oldpassword');
       this.error = false;
     },
     newpassword: function() {
+      this.toggleInputClass('newpassword');
       this.error = false;
     },
     confirmnewpassword: function() {
+      this.toggleInputClass('confirmnewpassword');
       this.error = false;
     },
   }
@@ -321,6 +341,10 @@ export default {
                 background: #fd4f31;
                 color: #fff;
                 margin-right: #{scaleValue(30)};
+
+                &.loading {
+                  opacity: .3;
+                }
 
                 @media only screen and (max-width: 414px) { 
                     height: #{scaleValue(210)}; 

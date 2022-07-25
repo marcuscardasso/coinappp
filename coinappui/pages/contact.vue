@@ -11,7 +11,7 @@
                 <span>Cxefinance is a highly established online trading platform, offering leveraged trading experience in five global markets, such as Cryptocurrencies, Stocks, Indices, Commodities and FOREX. The company was founded in 2012 in London (United Kingdom), focusing primarily on providing CFD platform to retail investors. At the moment, over 10000 traders worldwide enjoy having access to over 150 assets and taking advantage of market movements.</span>
             </div>
             <div class="contact__main--right">
-            <Popup :message="clientfeedback" :functiontorun="removeMessage" v-if="clientfeedback"/>
+              <Popup :popupmessage="popupmessage" :functiontorun="resetPopup" :messageType="popupmessageType" v-if="popupmessage"/>
                 <div class="contact__form">
                     <div class="contact__form--area">
                         <div class="contact__form--input">
@@ -55,6 +55,7 @@
 
 <script>
 import userMixin from '@/mixins/user.js';
+import popupMixin from '@/mixins/popup.js';
 export default {
   data() {
     return {
@@ -65,16 +66,12 @@ export default {
       message: '',
       error: false,
       loading: false,
-      clientfeedback: false
     }
   },
-  mixins: [userMixin],
+  mixins: [userMixin, popupMixin],
   methods: {
     toggleInputClass(key) {
       this.$refs[`${key}`].style.borderBottom = `1px solid #000000`;
-    },
-    removeMessage() {
-      this.cilentfeedback = false;
     },
     openpage(route) {
       if (route.length) {
@@ -94,8 +91,7 @@ export default {
           }
         }).then(res => res.json())
         .then(json => {
-          console.log(json);
-          this.clientfeedback = `Hello, ${json.contact.fullname}, ${json.message}`;
+          this.popupmessage = `Hello, ${json.contact.fullname}, ${json.message}`;
           this.loading = false;
 
           this.fullname = '';

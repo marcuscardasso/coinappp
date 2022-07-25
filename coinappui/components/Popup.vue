@@ -1,8 +1,17 @@
 <template>
   <div>
-    <div class="popup" v-if="message">
-        <div class="popup__message">
-            <p>{{ message }}</p>
+    <div class="popup">
+        <div class="popup__message" v-if="popupmessageType === 'error'">
+            <p>{{ popupmessage }}</p>
+            <span class="popup__close" @click="close">
+                 <svg>
+                    <use xlink:href="@/assets/imgs/sprite.svg#icon-x-altx-alt" />
+                 </svg>
+            </span>
+        </div>
+
+        <div class="popup__message okay" v-if="popupmessageType !== 'error'">
+            <p>{{ popupmessage }}!</p>
             <span class="popup__close" @click="close">
                  <svg>
                     <use xlink:href="@/assets/imgs/sprite.svg#icon-x-altx-alt" />
@@ -15,17 +24,18 @@
 
 <script>
 export default {
-    props: ['message', 'functiontorun'],
+    props: ['popupmessage', 'functiontorun', 'popupmessageType'],
     methods:{
         close() {
             this.message = '';
+            this.messageType = '';
             if (this.functiontorun) {
                 this.functiontorun();
             }
         }
     },
-    computed: {
-
+    mounted() {
+        console.log(this.popupmessageType)
     }
 }
 </script>
@@ -38,21 +48,42 @@ export default {
 }
 
     .popup {
-        position: absolute;
+        position: fixed;
         width: 100%;
         top: 0;
         left: 0;
+        z-index: 10;
         
         &__message {
             position: relative;
             background: #fff;
-            padding: #{scaleValue(20)};
             width: #{scaleValue(386)};
-            color: #fd4f31;
+            color: red;
             margin: #{scaleValue(20)} auto;
             display: flex;
             justify-content: center;
-            text-align: center;
+            text-align: left;
+            border: 1px solid red;
+            line-height: #{scaleValue(25)};
+
+            box-shadow: -14px -4px 40px -8px red;
+            -webkit-box-shadow: -14px -4px 40px -8px red;
+            -moz-box-shadow: -14px -4px 40px -8px red;
+            padding: #{scaleValue(50)} #{scaleValue(20)};
+
+            @media only screen and (max-width: 414px) {
+                width: #{scaleValue(1300)};
+                line-height: #{scaleValue(90)};
+            }
+
+            &.okay {
+                color: #000000;
+                border: none;
+                box-shadow: -14px -4px 40px -8px rgba(0,0,0,0.33);
+                -webkit-box-shadow: -14px -4px 40px -8px rgba(0,0,0,0.33);
+                -moz-box-shadow: -14px -4px 40px -8px rgba(0,0,0,0.33);
+                padding: #{scaleValue(50)} #{scaleValue(20)};
+            }
         }
 
         &__close {
@@ -64,10 +95,19 @@ export default {
             padding: #{scaleValue(5)};
             cursor: pointer;
 
+            @media only screen and (max-width: 414px) {
+                padding: #{scaleValue(20)};
+            }
+
             & svg {
                 fill: #fd4f31;
                 height: #{scaleValue(20)};
                 width: #{scaleValue(20)};
+
+                @media only screen and (max-width: 414px) {
+                    height: #{scaleValue(70)};
+                    width: #{scaleValue(70)};
+                }
             }
         }
     }

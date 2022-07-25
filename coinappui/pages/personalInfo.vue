@@ -12,6 +12,7 @@
           </div>
 
           <div class="personalinfo__content--right">
+          <Popup :popupmessage="popupmessage" :functiontorun="resetPopup" :popupmessageType="popupmessageType" v-if="popupmessage"/>
             <div class="personalinfo__dashboard">
                 <div class="personalinfo__dashboard--top">
                     <h1>PERSONAL INFO</h1>
@@ -75,7 +76,8 @@
 </template>
 
 <script>
-import userMixin from '@/mixins/user.js'
+import userMixin from '@/mixins/user.js';
+import popupMixin from '@/mixins/popup.js';
 export default {
     data() {
       return {
@@ -89,7 +91,7 @@ export default {
         loading: false
       }
     },
-    mixins: [userMixin],
+    mixins: [userMixin, popupMixin],
     methods: {
       editValue(value, valueToEdit) {
         if (valueToEdit === 'First Name') {
@@ -153,9 +155,10 @@ export default {
         .then(response => response.json()) 
         .then(json => {
             this.getUser();
+            this.popupmessage = `Your details have been successfully updated`;
             this.loading = false;
         }).then(json => {
-            this.edit = false
+            //this.edit = false
         })
         .catch(err => console.log(err));
       }

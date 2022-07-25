@@ -10,7 +10,7 @@ services:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
       - ./nginx/data/certs:/etc/nginx/certs
     depends_on:
-        - node-app
+        - express-app
   db:
     container_name: db
     image: mongo
@@ -18,12 +18,12 @@ services:
       - PORT=27017
     volumes:
     - /data-vol:/data/db
-  node-app:
-    container_name: node-app
+  express-app:
+    container_name: express-app
     restart: always
     build: ./serverapp
     environment:
-      - PORT=8001
+      - PORT=8080
     links:
       - db
   nuxt-app:

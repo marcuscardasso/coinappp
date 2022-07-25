@@ -35,7 +35,7 @@ email.get('/api/triggermail', function (req, res) {
             pm = _context.sent;
             _context.next = 5;
             return pm.sendEmail({
-              to: 'nerdyemmanuel@gmail.com',
+              to: 'asterixinfintum@protonmail.com',
               subject: 'Send email tutorial',
               body: 'Hello world'
             });

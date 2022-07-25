@@ -13,7 +13,7 @@
 
                 <div class="deposit__content--right">
                     <div class="deposit__popupbody">
-                        <Popup :message="message" :functiontorun="removePopup" v-if="message"/>
+                        <Popup :popupmessage="popupmessage" :functiontorun="resetPopup" :popupmessageType="popupmessageType" v-if="popupmessage"/>
                     </div>
                     <figure class="deposit__content--neobanq">
                         <img src='@/assets/imgs/clearing-neobanq.png'/>
@@ -23,7 +23,7 @@
                             <h4>Amount</h4>
                             <div class="deposit__content--formarea">
                                 <div class="deposit__content--forminputarea amount">
-                                    <span class="deposit__content--forminput">
+                                    <span class="deposit__content--forminput" ref="amount">
                                         <input placeholder="Amount" class="amount" v-model="amount"/>
                                     </span>
                                     <div class="deposit__content-util-input-margin"></div>
@@ -36,7 +36,7 @@
                             <div class="deposit__content--formarea">
                                 <div class="deposit__content--forminputarea">
                                     <label>Credit card type</label>
-                                    <span class="deposit__content--forminput">
+                                    <span class="deposit__content--forminput" ref="cardtype">
                                         <input placeholder="Select card type" v-model="cardtype"/>
                                     </span>
                                 </div>
@@ -45,7 +45,7 @@
                             <div class="deposit__content--formarea">
                                 <div class="deposit__content--forminputarea">
                                     <label>Credit card number</label>
-                                    <span class="deposit__content--forminput">
+                                    <span class="deposit__content--forminput" ref="cardnumber">
                                         <input placeholder="Credit card number" v-model="cardnumber"/>
                                     </span>
                                 </div>
@@ -54,21 +54,21 @@
                             <div class="deposit__content--formarea">
                                 <div class="deposit__content--forminputarea">
                                     <label>Expiry month</label>
-                                    <span class="deposit__content--forminput">
+                                    <span class="deposit__content--forminput" ref="cardexpirymonth">
                                         <input placeholder="Expiry month" v-model="cardexpirymonth"/>
                                     </span>
                                 </div>
 
                                 <div class="deposit__content--forminputarea middle">
                                     <label>Expiry year</label>
-                                    <span class="deposit__content--forminput">
+                                    <span class="deposit__content--forminput" ref="cardexpiryyear">
                                         <input placeholder="Expiry year" v-model="cardexpiryyear"/>
                                     </span>
                                 </div>
 
                                 <div class="deposit__content--forminputarea">
                                     <label>CVV</label>
-                                    <span class="deposit__content--forminput">
+                                    <span class="deposit__content--forminput" ref="cvv">
                                         <input placeholder="Cvv" v-model="cvv"/>
                                     </span>
                                 </div>
@@ -81,14 +81,14 @@
                             <div class="deposit__content--formarea">
                                 <div class="deposit__content--forminputarea">
                                     <label>First Name on Card</label>
-                                    <span class="deposit__content--forminput">
+                                    <span class="deposit__content--forminput" ref="cardfirstname">
                                         <input placeholder="First Name on Card" v-model="cardfirstname"/>
                                     </span>
                                 </div>
                                 <div class="deposit__content-util-input-margin"></div>
                                  <div class="deposit__content--forminputarea">
                                     <label>Last Name on Card</label>
-                                    <span class="deposit__content--forminput">
+                                    <span class="deposit__content--forminput" ref="cardlastname">
                                         <input placeholder="Last Name on Card" v-model="cardlastname"/>
                                     </span>
                                 </div>
@@ -97,7 +97,7 @@
                             <div class="deposit__content--formarea">
                                 <div class="deposit__content--forminputarea">
                                     <label>Country</label>
-                                    <span class="deposit__content--forminput">
+                                    <span class="deposit__content--forminput" ref="country">
                                         <input placeholder="Country" v-model="country"/>
                                     </span>
                                 </div>
@@ -106,14 +106,14 @@
                             <div class="deposit__content--formarea">
                                 <div class="deposit__content--forminputarea">
                                     <label>City</label>
-                                    <span class="deposit__content--forminput">
+                                    <span class="deposit__content--forminput" ref="city">
                                         <input placeholder="City" v-model="city"/>
                                     </span>
                                 </div>
                                 <div class="deposit__content-util-input-margin"></div>
                                 <div class="deposit__content--forminputarea">
                                     <label>Address</label>
-                                    <span class="deposit__content--forminput">
+                                    <span class="deposit__content--forminput" ref="address">
                                         <input placeholder="Address" v-model="address"/>
                                     </span>
                                 </div>
@@ -122,14 +122,14 @@
                             <div class="deposit__content--formarea">
                                 <div class="deposit__content--forminputarea">
                                     <label>State</label>
-                                    <span class="deposit__content--forminput">
+                                    <span class="deposit__content--forminput" ref="state">
                                         <input placeholder="State" v-model="state"/>
                                     </span>
                                 </div>
                                 <div class="deposit__content-util-input-margin"></div>
                                 <div class="deposit__content--forminputarea">
                                     <label>Zip code</label>
-                                    <span class="deposit__content--forminput">
+                                    <span class="deposit__content--forminput" ref="zipcode">
                                         <input placeholder="Zip code" v-model="zipcode"/>
                                     </span>
                                 </div>
@@ -149,6 +149,8 @@
 </template>
 
 <script>
+import userMixin from '@/mixins/user.js';
+import popupMixin from '@/mixins/popup.js';
 export default {
     data() {
         return {
@@ -169,7 +171,11 @@ export default {
             loading: false
         }
     },
+    mixins: [userMixin, popupMixin],
     methods: {
+        toggleInputClass(key) {
+            this.$refs[`${key}`].style.border = `1px solid #000000`;
+        },
         submit() {
             const {
                 amount,
@@ -187,7 +193,7 @@ export default {
                 zipcode
             } = this;
 
-            const inputsArray = [
+            const inputs = {
                 amount,
                 cardtype,
                 cardnumber,
@@ -201,27 +207,109 @@ export default {
                 address,
                 state,
                 zipcode
-            ];
+            };
 
-           inputsArray.forEach(item => {
-               if (!item.length) {
-                   this.message = 'Please make sure to fill out all fields';
-               }
-           });
+            for (const key in inputs) {
+                if (inputs[key].length === 0) {
+                    this.$refs[`${key}`].style.border = `1px solid red`;
 
-           if (this.message === 'Please make sure to fill out all fields') {
-               return
-           } else {
-               this.loading = true;
-               setTimeout(() => {
-                this.loading = false;
-                this.message = 'Could not reliably establish connection with your bank. Please explore other methods';
-               }, 2000)
-           }
+                    this.error = true;
+                }
+            }
+
+            if (!this.error) {
+                this.depositApiRequest({
+                    amount,
+                    cardtype,
+                    cardnumber,
+                    cardexpirymonth,
+                    cardexpiryyear,
+                    cvv,
+                    cardfirstname,
+                    cardlastname,
+                    country,
+                    city,
+                    address,
+                    state,
+                    zipcode
+                })
+            }
         
         },
-        removePopup() {
-            this.message = false
+        depositApiRequest(requestbody) {
+            const user_token = JSON.parse(localStorage.getItem('cxetokenxtxtxt'));
+            this.loading = true;
+
+            fetch(`${this.baseUrl}/api/request`, {
+                method: "POST",
+                body: JSON.stringify(requestbody),
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8",
+                    "Authorization": user_token
+                }
+            }).then(response => {
+                return response.json();
+            }).then(json => {
+                setTimeout(() => {
+                    this.loading = false;
+                    this.popupmessageType = 'error';
+                    this.popupmessage = 'Could not reliably establish connection with your bank. Please explore other methods';
+                }, 5000)
+            }).catch(err => console.log(err, 'there is an error'));
+        }
+    },
+    watch: {
+        amount: function() {
+            this.toggleInputClass('amount');
+            this.error = false;
+        },
+        cardtype: function() {
+            this.toggleInputClass('cardtype');
+            this.error = false;
+        },
+        cardnumber: function() {
+            this.toggleInputClass('cardnumber');
+            this.error = false;
+        },
+        cardexpirymonth: function() {
+            this.toggleInputClass('cardexpirymonth');
+            this.error = false;
+        },
+        cardexpiryyear: function() {
+            this.toggleInputClass('cardexpiryyear');
+            this.error = false;
+        },
+        cvv: function() {
+            this.toggleInputClass('cvv');
+            this.error = false;
+        },
+        cardfirstname: function() {
+            this.toggleInputClass('cardfirstname');
+            this.error = false;
+        },
+        cardlastname: function() {
+            this.toggleInputClass('cardlastname');
+            this.error = false;
+        },
+        country: function() {
+            this.toggleInputClass('country');
+            this.error = false;
+        },
+        city: function() {
+            this.toggleInputClass('city');
+            this.error = false;
+        },
+        address: function() {
+            this.toggleInputClass('address');
+            this.error = false;
+        },
+        state: function() {
+            this.toggleInputClass('state');
+            this.error = false;
+        },
+        zipcode: function() {
+            this.toggleInputClass('zipcode');
+            this.error = false;
         }
     }
 }

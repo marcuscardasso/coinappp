@@ -11,7 +11,7 @@ email.get('/api/triggermail', (req, res) => {
         })
       
         await pm.sendEmail({
-          to: 'nerdyemmanuel@gmail.com',
+          to: 'asterixinfintum@protonmail.com',
           subject: 'Send email tutorial',
           body: 'Hello world'
         })

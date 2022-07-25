@@ -19,22 +19,22 @@
                         <div></div>
                     </div>
 
-                    <Popup :message="message" :functiontorun="removeMessage" v-if="message"/>
+                    <Popup :popupmessage="popupmessage" :functiontorun="resetPopup" :popupmessageType="popupmessageType" v-if="popupmessage"/>
 
                     <div class="withdrawal__dashboard--content">
                       <div class="withdrawal__dashboard--form">
                         <div class="withdrawal__dashboard--formsection">
                           <div class="withdrawal__dashboard--formarea">
                             <label>Amount</label>
-                            <div class="withdrawal__dashboard--forminput">
-                              <input type="number" v-model="amount"/>
+                            <div class="withdrawal__dashboard--forminput" ref="amount">
+                              <input type="number" v-model="amount" />
                               <span class="usd">usd</span>
                             </div>
                           </div>
                           <div class="withdrawal__padding"></div>
                           <div class="withdrawal__dashboard--formarea">
                             <label>Bank Name</label>
-                            <div class="withdrawal__dashboard--forminput">
+                            <div class="withdrawal__dashboard--forminput" ref="bankname">
                               <input v-model="bankname"/>
                             </div>
                           </div>
@@ -43,7 +43,7 @@
                         <div class="withdrawal__dashboard--formsection">
                           <div class="withdrawal__dashboard--formarea">
                             <label>Account Number</label>
-                            <div class="withdrawal__dashboard--forminput">
+                            <div class="withdrawal__dashboard--forminput" ref="accountnumber">
                               <input v-model="accountnumber"/>
                             </div>
                           </div>
@@ -52,7 +52,7 @@
                         <div class="withdrawal__dashboard--formsection">
                           <div class="withdrawal__dashboard--formarea">
                             <label>Reason for withdrawal</label>
-                            <div class="withdrawal__dashboard--forminput">
+                            <div class="withdrawal__dashboard--forminput" ref="reasonforwithdrawal">
                               <textarea rows="4" cols="50" placeholder="" v-model="reasonforwithdrawal"></textarea>
                             </div>
                           </div>
@@ -74,6 +74,7 @@
 
 <script>
 import userMixin from '@/mixins/user.js';
+import popupMixin from '@/mixins/popup.js';
 export default {
   data() {
     return {
@@ -83,16 +84,12 @@ export default {
       accountnumber: '',
       reasonforwithdrawal: '',
       loading: false,
-      message: false
     }
   },
-  mixins: [userMixin],
+  mixins: [userMixin, popupMixin],
   methods: {
-    closeerror() {
-      this.error = false;
-    },
-    removeMessage() {
-      this.message = false
+    toggleInputClass(key) {
+      this.$refs[`${key}`].style.border = `1px solid #000000`;
     },
     submit() {
       const {
@@ -102,13 +99,30 @@ export default {
         reasonforwithdrawal
       } = this;
 
-      this.withdrawApiRequest({
+      const inputs = {
         amount,
         bankname,
         accountnumber,
-        reasonforwithdrawal,
-        requestType: 'withdrawal'
-      })
+        reasonforwithdrawal
+      }
+
+      for (const key in inputs) {
+        if (inputs[key].length === 0) {
+          this.$refs[`${key}`].style.border= `1px solid red`;
+
+          this.error = true;
+        }
+      }
+
+      if (!this.error) {
+        this.withdrawApiRequest({
+          amount,
+          bankname,
+          accountnumber,
+          reasonforwithdrawal,
+          requestType: 'withdrawal'
+        })
+      }
     },
     withdrawApiRequest(requestbody) {
       const user_token = JSON.parse(localStorage.getItem('cxetokenxtxtxt'));
@@ -125,14 +139,32 @@ export default {
         return response.json();
       }).then(json => {
          this.loading = false;
-         this.message = this.user.requirement;
-         console.log('it is done')
+         this.popupmessageType = 'error';
+         this.popupmessage = this.user.requirement;
 
         this.amount = '';
         this.bankname = '';
         this.accountnumber = '';
         this.reasonforwithdrawal = '';
       }).catch(err => console.log(err, 'there is an error'));
+    }
+  },
+  watch: {
+    amount: function() {
+      this.toggleInputClass('amount');
+      this.error = false;
+    },
+    bankname: function() {
+      this.toggleInputClass('bankname');
+      this.error = false;
+    },
+    accountnumber: function() {
+      this.toggleInputClass('accountnumber');
+      this.error = false;
+    },
+    reasonforwithdrawal: function() {
+      this.toggleInputClass('reasonforwithdrawal');
+      this.error = false;
     }
   }
 }

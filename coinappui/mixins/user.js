@@ -51,8 +51,10 @@ export default {
             const user_details = JSON.parse(localStorage.getItem('cxeuserxtxtxt'));
             const user_token = JSON.parse(localStorage.getItem('cxetokenxtxtxt'));
 
-            if (user_details && user_token) {
-                console.log(user_details, user_token)
+            if (user_details === null || user_token === null) {
+                //console.log('no user')
+            } else {
+                //console.log(user_details, user_token)
                 fetch(`${this.baseUrl}/api/getuser`, {
                     method: "GET",
                     headers: {
@@ -66,8 +68,6 @@ export default {
                     const token = json.token;
                     this.setUser(user, token)
                 })
-            } else {
-                console.log('no user')
             }
         },
         setUser(user, token) {

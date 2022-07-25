@@ -11,7 +11,7 @@
         </div>
     </div>
     <div class="dexgraphtoggle__item" @click="graphtoggle('BINANCE:BTCUSDT')">
-        <div class="dexgraphtoggle__item--top">BTCUSDT</div>
+        <div class="dexgraphtoggle__item--top">BTC/USDT</div>
         <div class="dexgraphtoggle__item--bottom">
             <div class="dexgraphtoggle__item--number">0.67<span class="red">67</span><span class="smallno">8</span></div>
             <div class="dexgraphtoggle__item--arrow">
@@ -21,7 +21,7 @@
         </div>
     </div>
     <div class="dexgraphtoggle__item" @click="graphtoggle('COINBASE:BTCEUR')">
-        <div class="dexgraphtoggle__item--top">BTCEUR</div>
+        <div class="dexgraphtoggle__item--top">BTC/EUR</div>
         <div class="dexgraphtoggle__item--bottom">
             <div class="dexgraphtoggle__item--number">0.67<span class="red">67</span><span class="smallno">8</span></div>
             <div class="dexgraphtoggle__item--arrow">
@@ -31,7 +31,7 @@
         </div>
     </div>
     <div class="dexgraphtoggle__item" @click="graphtoggle('BINANCE:ETHUSDT')">
-        <div class="dexgraphtoggle__item--top">ETHUSDT</div>
+        <div class="dexgraphtoggle__item--top">ETH/USDT</div>
         <div class="dexgraphtoggle__item--bottom">
             <div class="dexgraphtoggle__item--number">0.67<span class="red">67</span><span class="smallno">8</span></div>
             <div class="dexgraphtoggle__item--arrow">
@@ -41,7 +41,7 @@
         </div>
     </div>
     <div class="dexgraphtoggle__item" @click="graphtoggle('BINANCE:EURUSDT')">
-        <div class="dexgraphtoggle__item--top">EURUSD</div>
+        <div class="dexgraphtoggle__item--top">EUR/USD</div>
         <div class="dexgraphtoggle__item--bottom">
             <div class="dexgraphtoggle__item--number">0.67<span class="red">67</span><span class="smallno">8</span></div>
             <div class="dexgraphtoggle__item--arrow">
@@ -51,7 +51,7 @@
         </div>
     </div>
     <div class="dexgraphtoggle__item" @click="graphtoggle('FX:GBPJPY')">
-        <div class="dexgraphtoggle__item--top">GBPJPY</div>
+        <div class="dexgraphtoggle__item--top">GBP/JPY</div>
         <div class="dexgraphtoggle__item--bottom">
             <div class="dexgraphtoggle__item--number">0.67<span class="red">67</span><span class="smallno">8</span></div>
             <div class="dexgraphtoggle__item--arrow">
@@ -105,6 +105,14 @@ export default {
         align-items: center;
         justify-content: space-between;;
         padding: #{scaleValue(10)} #{scaleValue(14)};
+        border-bottom: .1px solid rgba(255,255,255,.2);
+
+        @media only screen and (max-width: 414px) {
+            flex-wrap: wrap;
+            align-items: flex-start;
+
+            padding-top: #{scaleValue(100)};
+        }
 
         &__item {
             display: flex;
@@ -113,22 +121,42 @@ export default {
             align-items: center;
             cursor: pointer;
             line-height: #{scaleValue(25)};
+            font-size: #{scaleValue(12)};
+
+            @media only screen and (max-width: 414px) {
+                font-size: #{scaleValue(50)};
+                align-items: flex-start;
+                margin-bottom: #{scaleValue(140)};
+                justify-content: center;
+            }
 
             &--top {
                 text-transform: uppercase;
-                font-size: ç
+
+                @media only screen and (max-width: 414px) {
+                    font-size: #{scaleValue(60)};
+                    margin-bottom: #{scaleValue(50)};
+                }
             }
             
             &--bottom {
                 display: flex;
                 align-items: center;
-                font-size: #{scaleValue(15)};
                 align-items: center;
+
+                @media only screen and (max-width: 414px) {
+                    font-size: #{scaleValue(50)};
+                }
 
                 & svg {
                     fill: red;
                     height: #{scaleValue(18)};
                     width: #{scaleValue(20)};
+
+                    @media only screen and (max-width: 414px) {
+                        height: #{scaleValue(60)};
+                        width: #{scaleValue(60)};
+                    }
                 }
             }
 

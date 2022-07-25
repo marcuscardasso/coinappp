@@ -89,7 +89,7 @@ export default {
     );
 }
 
-    .dex {
+.dex {
 
     &__rightnumbers {
         position: relative;
@@ -98,6 +98,11 @@ export default {
         background: rgb(8, 8, 33);
         width: #{scaleValue(320)};
         position: relative;
+
+        @media only screen and (max-width: 414px) { 
+            width: #{scaleValue(1450)};
+            margin: 0 auto;
+        }
 
         &--header {
             display: flex;
@@ -108,10 +113,19 @@ export default {
             padding:  #{scaleValue(15)} #{scaleValue(20)};
             border-bottom: .1px solid rgba(255,255,255,.2);
 
+            @media only screen and (max-width: 414px) { 
+                font-size: #{scaleValue(70)}; 
+                padding:  #{scaleValue(40)} #{scaleValue(40)};
+            }
+
             & div {
                 display: flex;
                 align-items: center;
                 width: #{scaleValue(70)};
+
+                @media only screen and (max-width: 414px) { 
+                    width: 100%;
+                }
             }
         }
 
@@ -122,6 +136,11 @@ export default {
             padding: #{scaleValue(10)} #{scaleValue(20)};
             font-size: #{scaleValue(13)}; 
 
+            @media only screen and (max-width: 414px) { 
+                font-size: #{scaleValue(60)}; 
+                padding:  #{scaleValue(40)} #{scaleValue(20)};
+            }
+
             &:nth-child(2n) {
                 background: rgb(20, 20, 45);
             }
@@ -131,6 +150,10 @@ export default {
                 align-items: center;
                 width: #{scaleValue(70)};
                 font-weight: 200;
+
+                @media only screen and (max-width: 414px) { 
+                    width: 100%;
+                }
             }
         }
 

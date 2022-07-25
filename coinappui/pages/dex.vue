@@ -44,7 +44,7 @@
             <DexHeader />
         </div>
         <div class="dex__header">
-            <!--<DexGraphToggle :graphtoggle="graphtoggle"/>-->
+            <DexGraphToggle :graphtoggle="graphtoggle"/>
         </div>
         <Popup :message="error" :functiontorun="resetError" v-if="error"/>
         <div class="dex__body">
@@ -151,17 +151,14 @@
                 </div>
 
                 <div class="dex__rightbase">
-                    <div class="dex__graphtop">
-
-                    </div>
                     <div class="dex__graph">
-                        <DexGraph :symbol="'BINANCE:BTCUSDT'" v-if="graphsymbol === 'BINANCE:BTCUSDT'"/>
+                        <!--<DexGraph :symbol="'BINANCE:BTCUSDT'" v-if="graphsymbol === 'BINANCE:BTCUSDT'"/>
                         <DexGraph :symbol="'FX:AUDUSD'" v-if="graphsymbol === 'FX:AUDUSD'"/>
                         <div class="dex__graphplaceholder" v-if="graphsymbol === 'none'"></div>
                         <DexGraph :symbol="'COINBASE:BTCEUR'" v-if="graphsymbol === 'COINBASE:BTCEUR'"/>
                         <DexGraph :symbol="'BINANCE:ETHUSDT'" v-if="graphsymbol === 'BINANCE:ETHUSDT'"/>
                         <DexGraph :symbol="'BINANCE:EURUSDT'" v-if="graphsymbol === 'BINANCE:EURUSDT'"/>
-                        <DexGraph :symbol="'FX:GBPJPY'" v-if="graphsymbol === 'FX:GBPJPY'"/>
+                        <DexGraph :symbol="'FX:GBPJPY'" v-if="graphsymbol === 'FX:GBPJPY'"/>-->
                     </div>
                     <div class="dex__assets">
                         <h2 class="dex__assetsheader">Trades History</h2>
@@ -204,7 +201,7 @@
                                     </span>
                                     <span class="dex__dropdown--label">Stocks</span>
                                 </div>
-                                <div class="dex__dropdown--right  dex__dropdown--area">
+                                <div class="dex__dropdown--right dex__dropdown--area">
                                     <span class="dex__dropdown--drop">
                                         <svg>
                                             <use xlink:href="@/assets/imgs/sprite.svg#icon-chevron-down" />
@@ -333,6 +330,15 @@ export default {
     min-height: 100vh;
     background: rgb(8, 8, 33);
 
+    &__graph {
+       //offline development
+        width: #{scaleValue(900)};
+
+        @media only screen and (max-width: 414px) { 
+            display: none;
+        }
+    }
+
     &__tradeslide {
       overflow: hidden;
       height: #{scaleValue(35)};
@@ -361,6 +367,10 @@ export default {
     &__body {
         display: flex;
         justify-content: center;
+
+        @media only screen and (max-width: 414px) { 
+            flex-direction: column;
+        }
     }
 
     &__left {
@@ -370,6 +380,12 @@ export default {
         padding: #{scaleValue(16)} #{scaleValue(16)};
 
         border-right: .1px solid rgba(255,255,255,.2);
+
+        @media only screen and (max-width: 414px) { 
+            width: #{scaleValue(1500)};
+            height: auto;
+            margin: #{scaleValue(100)} 0;
+        }
     }
 
     &__flexarea {
@@ -385,6 +401,10 @@ export default {
             font-weight: 500;
             font-size: #{scaleValue(17)};
             margin-bottom: #{scaleValue(14)};
+
+            @media only screen and (max-width: 414px) { 
+                font-size: #{scaleValue(60)};
+            }
         }
     }
 
@@ -401,6 +421,10 @@ export default {
             display: flex;
             align-items: center;
 
+            @media only screen and (max-width: 414px) {
+                font-size: #{scaleValue(50)};
+            } 
+
             & span {
                 display: inline-block;
 
@@ -408,6 +432,12 @@ export default {
                     height: #{scaleValue(20)};
                     width: #{scaleValue(20)};
                     margin-right: #{scaleValue(10)};
+
+                    @media only screen and (max-width: 414px) {
+                        height: #{scaleValue(50)};
+                        width: #{scaleValue(50)};
+                        margin-right: #{scaleValue(40)};;
+                    } 
 
                     & img {
                         object-fit: cover;
@@ -429,14 +459,28 @@ export default {
         font-size: #{scaleValue(15)};
         font-weight: 400;
         padding: #{scaleValue(12)} 0;
+
+        @media only screen and (max-width: 414px) {
+            font-size: #{scaleValue(90)};
+            padding: #{scaleValue(40)} 0;
+            margin-top: #{scaleValue(70)};
+        } 
     }
 
     &__sectionone {
         position: relative;
 
+         @media only screen and (max-width: 414px) {
+            margin-bottom: #{scaleValue(100)};
+         } 
+
         &--labels {
             line-height: #{scaleValue(30)};
             position: relative;
+
+            @media only screen and (max-width: 414px) { 
+                line-height: #{scaleValue(150)};
+            }
 
             &:nth-child(2) {
                 padding-bottom: #{scaleValue(15)};
@@ -458,11 +502,19 @@ export default {
                 &:nth-child(1) {
                     color: rgba(255,255,255,.5);
                     font-size: #{scaleValue(14)};
+
+                    @media only screen and (max-width: 414px) { 
+                        font-size: #{scaleValue(60)};
+                    }
                 }
 
                 &:nth-child(2) {
                     color: rgba(255,255,255,.8);
                     font-size: #{scaleValue(13)};
+
+                    @media only screen and (max-width: 414px) { 
+                        font-size: #{scaleValue(60)};
+                    }
                 }
 
                 &.bridgehighlight {
@@ -473,6 +525,10 @@ export default {
 
                 &.bridgenumber {
                     font-size: #{scaleValue(15)};
+
+                    @media only screen and (max-width: 414px) { 
+                        font-size: #{scaleValue(60)};
+                    }
                 }
             }
         }
@@ -491,6 +547,11 @@ export default {
                 text-transform: uppercase;
                 color: #fff;
 
+                @media only screen and (max-width: 414px) {
+                    padding: #{scaleValue(70)} #{scaleValue(14)};
+                    font-size: #{scaleValue(60)};
+                } 
+
                 &.current {
                     background: rgb(78, 227, 158);
                     color: #000000;
@@ -504,6 +565,10 @@ export default {
 
         &--inputarea {
             margin-bottom: #{scaleValue(20)};
+
+            @media only screen and (max-width: 414px) {
+                margin-bottom: #{scaleValue(100)};
+            } 
         }
 
         &--inputbody {
@@ -522,6 +587,12 @@ export default {
                     padding-top: #{scaleValue(12)};
                     font-size: #{scaleValue(12)};
                     cursor: pointer;
+
+                    @media only screen and (max-width: 414px) {
+                        font-size: #{scaleValue(50)};
+
+                        padding: 0 #{scaleValue(40)};
+                    } 
                 }
             }
         }
@@ -531,6 +602,10 @@ export default {
             align-items: center;
             position: relative;
 
+            @media only screen and (max-width: 414px) {
+                margin-bottom: #{scaleValue(40)};
+            } 
+
             & span {
                 display: inline-block;
 
@@ -538,11 +613,20 @@ export default {
                     font-size: #{scaleValue(13)};
                     opacity: .6;
                     margin-right: #{scaleValue(6)};
+
+                    @media only screen and (max-width: 414px) {
+                        font-size: #{scaleValue(50)};
+                        margin-right: #{scaleValue(40)};
+                    } 
                 }
 
                 &:nth-child(2) {
                     font-size: #{scaleValue(15)};
                     margin-right: #{scaleValue(4)};
+
+                    @media only screen and (max-width: 414px) {
+                        font-size: #{scaleValue(50)};
+                    } 
                 }
             }
         }
@@ -558,6 +642,13 @@ export default {
             border-radius: .5rem;
             font-size: #{scaleValue(15)};
             min-width: 100%;
+
+            @media only screen and (max-width: 414px) {
+               height: #{scaleValue(200)};
+               font-size: #{scaleValue(60)};
+
+               padding: #{scaleValue(25)} #{scaleValue(40)};
+            } 
         }
     }
 
@@ -582,6 +673,13 @@ export default {
             font-size: #{scaleValue(15)};
             padding-top: #{scaleValue(20)};
 
+            @media only screen and (max-width: 414px) { 
+                margin-top: #{scaleValue(30)};
+                padding-top: #{scaleValue(60)};
+                margin-bottom: #{scaleValue(60)};
+                font-size: #{scaleValue(60)};
+            }
+
             &:before {
                 content: '';
                 position: absolute;
@@ -601,6 +699,11 @@ export default {
         font-size: #{scaleValue(16)};
         padding: #{scaleValue(16)} 0;
         border-radius: .5rem;
+
+        @media only screen and (max-width: 414px) {
+            padding: #{scaleValue(70)} #{scaleValue(14)};
+            font-size: #{scaleValue(60)};
+        }
     }
 
     &__right {
@@ -616,8 +719,18 @@ export default {
         font-size: #{scaleValue(18)};
         padding-right: #{scaleValue(60)}; 
 
+        @media only screen and (max-width: 414px) {
+            flex-direction: column;
+            align-items: flex-start;
+            font-size: #{scaleValue(60)};
+        }
+
         &--item {
             display: flex;
+
+            @media only screen and (max-width: 414px) {
+                margin-bottom: #{scaleValue(100)};
+            }   
 
             & span {
                 display: flex;
@@ -631,7 +744,12 @@ export default {
 
                 &.label {
                     font-size: #{scaleValue(11)};
-                    color: rgba(255,255,255,.5)
+                    color: rgba(255,255,255,.5);
+
+                    @media only screen and (max-width: 414px) {
+                        font-size: #{scaleValue(50)};
+                        margin-left: #{scaleValue(40)};
+                    } 
                 }
 
                 &.green {
@@ -818,6 +936,10 @@ export default {
 
     &__rightbase {
         display: flex;
+
+        @media only screen and (max-width: 414px) { 
+            flex-direction: column;
+        }
     }
 
     &__graphplaceholder {
@@ -831,6 +953,14 @@ export default {
         padding-bottom: #{scaleValue(20)}; 
 
         overflow: scroll;
+
+        @media only screen and (max-width: 414px) { 
+            width: #{scaleValue(1500)};
+            //border: 1px solid red;
+            padding-left: #{scaleValue(20)};
+
+            height: #{scaleValue(2000)};
+        }
     }
 
     &__dropdowns {
@@ -845,6 +975,10 @@ export default {
         padding: #{scaleValue(16)} 0;
         cursor: pointer;
 
+        @media only screen and (max-width: 414px) { 
+            padding: #{scaleValue(50)} 0;
+        }
+
         &--area {
             display: flex;
             align-items: center;
@@ -856,17 +990,30 @@ export default {
             justify-content: space-between;
 
             margin-right: #{scaleValue(7)}; 
+
+            @media only screen and (max-width: 414px) { 
+                margin-right: #{scaleValue(37)}; 
+            }
             
             & svg {
                 fill: #e69138;
                 height: #{scaleValue(16)}; 
                 width: #{scaleValue(16)}; 
+
+                @media only screen and (max-width: 414px) { 
+                    height: #{scaleValue(50)}; 
+                    width: #{scaleValue(50)}; 
+                }
             }
         }
 
         &--label {
             font-size: #{scaleValue(15)};
             color: #e69138;
+
+            @media only screen and (max-width: 414px) { 
+                font-size: #{scaleValue(70)}; 
+            }
         }
 
         &--drop {
@@ -879,6 +1026,11 @@ export default {
                 fill: #e69138;
                 height: #{scaleValue(18)}; 
                 width: #{scaleValue(18)};
+
+                @media only screen and (max-width: 414px) { 
+                    height: #{scaleValue(70)}; 
+                    width: #{scaleValue(70)}; 
+                }
             }
         }
     }

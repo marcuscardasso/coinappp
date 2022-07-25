@@ -88,9 +88,20 @@ export default {
     padding: #{scaleValue(10)} #{scaleValue(14)};
     margin: 0 auto;
 
+    @media only screen and (max-width: 414px) {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
     &__logo {
         height: #{scaleValue(35)};
         width: #{scaleValue(30)};
+
+        @media only screen and (max-width: 414px) {
+            margin-bottom: #{scaleValue(70)}; 
+            height: #{scaleValue(135)};
+            width: #{scaleValue(130)};
+        }
 
         & img {
             object-fit: cover;
@@ -128,6 +139,11 @@ export default {
          display: flex;
          align-items: center;
 
+         @media only screen and (max-width: 414px) {
+            flex-direction: column;
+            align-items: flex-start;
+         }
+
         &--item {
             display: flex;
             align-items: center;
@@ -137,6 +153,11 @@ export default {
             padding: #{scaleValue(10)} #{scaleValue(13)};
             margin-left: #{scaleValue(15)};
             color: rgba(255,255,255,.7);
+
+            @media only screen and (max-width: 414px) {
+                font-size: #{scaleValue(60)};  
+                margin-bottom: #{scaleValue(70)}; 
+            }
 
             &.primary-color {
                 background: #fd4f31;
@@ -153,6 +174,11 @@ export default {
                 padding: #{scaleValue(10)} #{scaleValue(20)};
                 color: #fff;
                 cursor: pointer;
+
+                @media only screen and (max-width: 414px) {
+                    font-size: #{scaleValue(60)};
+                    padding: #{scaleValue(50)} #{scaleValue(80)};
+                }
             }
 
             & span {
@@ -163,6 +189,12 @@ export default {
                     height: #{scaleValue(15)};
                     width: #{scaleValue(15)};
                     margin-right: #{scaleValue(10)};
+
+                    @media only screen and (max-width: 414px) {
+                        height: #{scaleValue(60)};
+                        width: #{scaleValue(60)};
+                        margin-right: #{scaleValue(20)};
+                    }
 
                     & img {
                         object-fit: cover;
@@ -175,6 +207,11 @@ export default {
                     fill: #fff;
                     height: #{scaleValue(20)};
                     width: #{scaleValue(20)};
+
+                    @media only screen and (max-width: 414px) {
+                        height: #{scaleValue(80)};
+                        width: #{scaleValue(80)};
+                    }
                 }
             }
         }
