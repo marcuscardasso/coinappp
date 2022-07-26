@@ -20,3 +20,19 @@ Your system has configured 'manage_etc_hosts' as True.
 127.0.0.1   mail.cxefinance.com mail localhost
 
 MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuFbUASkNbJH4MhYsFFWAuhdAYJvoPtMBFm8Q1q9njU2QVFFzxHGQGAI82dLpy1z0ncpJBZJ3/TMqeGNpGYmy8MtO6cS0phIPlgcYL9kSZGOV9cxRK8Jr5jFhZ1vbVTGezNE+wIVE1HQUnDKt7LTZQjPXEVnYxLbQ/owX6fj/ouhaKxdxayS0Zmnb3E5Xd/V6FUOVvqpiE7JM2r6ovOlAIZs88domQ4kO4SI+Ewq678d1RKx1onmejRGaOMxeEuv8hsN8FXwY6862mYstFLjTpN8ullTIxjqo0M1D4crQEN9/lQ4c5GJfeo7WWchOLg29VFyl41DLvziZTj4rmaqF2QIDAQAB
+
+"bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^5.0.1",
+    "express-validator": "^6.14.0",
+    "jsonwebtoken": "^8.2.1",
+    "lodash": "^4.17.10",
+    "moment": "^2.22.1",
+    "mongodb": "^3.6.0",
+    "mongoose": "^5.10.0",
+    "nodemailer": "^6.7.7",
+    "protonmail-api": "^2.2.0",
+    "telegraf": "^3.33.3",
+    "validator": "^10.2.0"
