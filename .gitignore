@@ -1,3 +1,33 @@
 node_modules/
 play.txt
 playground.txt
+fc94348dd03b
+
+Congratulations! Your certificate and chain have been saved at:
+   /etc/letsencrypt/live/cxefinance.com/fullchain.pem
+   Your key file has been saved at:
+   /etc/letsencrypt/live/cxefinance.com/privkey.pem
+   Your cert will expire on 2022-10-11. To obtain a new or tweaked
+   version of this certificate in the future, simply run certbot
+   again. To non-interactively renew *all* of your certificates, run
+   "certbot renew"
+
+Congratulations! Your certificate and chain have been saved at:
+   /etc/letsencrypt/live/www.cxefinance.com/fullchain.pem
+   Your key file has been saved at:
+   /etc/letsencrypt/live/www.cxefinance.com/privkey.pem
+   Your cert will expire on 2022-10-11. To obtain a new or tweaked
+   version of this certificate in the future, simply run certbot
+   again. To non-interactively renew *all* of your certificates, run
+   "certbot renew"
+
+Congratulations! Your certificate and chain have been saved at:
+   /etc/letsencrypt/live/mail.cxefinance.com/fullchain.pem
+   Your key file has been saved at:
+   /etc/letsencrypt/live/mail.cxefinance.com/privkey.pem
+   Your cert will expire on 2022-10-23. To obtain a new or tweaked
+   version of this certificate in the future, simply run certbot
+   again. To non-interactively renew *all* of your certificates, run
+   "certbot renew"
+   
+v=DKIM1; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzBWpuywDAz2a/uB+UzlUeoEIwNw3htX0JZeUJj2xXx+vNr7sPZ87LwqUwwve7wlfwRs6+YAyzTog6Y0UzkndXPUmKKrpLi8tksAnY99l2ox5IxJ9NNAyAaPz1noZxmTqgVYUk1Rr0ynIEPcCJVvP1ahKODx9iPtOatRaiLZbSAJg4b9XZpU054A8ukVBoDfBGCEryteb5lJWXGeJxuEFW2yXlGvgFRY3XBbqdfc8aCEXxi0z8YNeAPLwOPwwLXR6t6haKx5Iq5xuxp4T8yC/v1eZev1JPpiXSCorLUIfUqOKOIxHtYxpOhHhwNpS0U17QPD3t4P8VQ4R9TNT8njrtQIDAQAB
