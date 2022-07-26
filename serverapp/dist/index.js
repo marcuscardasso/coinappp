@@ -65,42 +65,50 @@ app.use(email);
 app.use(admin);
 app.use(user);
 app.use(contact);
+server.listen(PORT, /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(error) {
+    return regeneratorRuntime.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            if (!error) {
+              _context.next = 2;
+              break;
+            }
 
-_mongoose["default"].connect('mongodb://127.0.0.1:27017/db', {
+            return _context.abrupt("return", error);
+
+          case 2:
+            return _context.abrupt("return", console.log("server started on port here now ".concat(PORT)));
+
+          case 3:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  }));
+
+  return function (_x) {
+    return _ref.apply(this, arguments);
+  };
+}());
+/*mongoose.connect('mongodb://db:27017/db', {
   //mongodb://db:27017/db =====> production
   //mongodb://127.0.0.1:27017/db ===> development
-  useNewUrlParser: true,
-  useCreateIndex: true,
-  useFindAndModify: false,
-  useUnifiedTopology: true
-}).then(function () {
-  console.log('connected to database');
-  server.listen(PORT, /*#__PURE__*/function () {
-    var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(error) {
-      return regeneratorRuntime.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              if (!error) {
-                _context.next = 2;
-                break;
-              }
 
-              return _context.abrupt("return", error);
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+    useUnifiedTopology: true 
+}).then(() => {
+    console.log('connected to database');
 
-            case 2:
-              return _context.abrupt("return", console.log("server started on port here now ".concat(PORT)));
-
-            case 3:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee);
-    }));
-
-    return function (_x) {
-      return _ref.apply(this, arguments);
-    };
-  }());
-});
+    server.listen(PORT, async (error) => {
+      if (error) {
+        return error;
+      }
+    
+      return console.log(`server started on port here now ${PORT}`);
+    });
+});*/
