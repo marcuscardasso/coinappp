@@ -1,15 +1,11 @@
-FROM node:12.18.1
+FROM node:16
 WORKDIR /app
-#COPY package*.json ./
-
 COPY package*.json ./
 
-RUN npm install --omit=dev
-
-#RUN npm install
+RUN npm install
 
 COPY . .
-ENV PORT 8080
+ENV PORT 8001
 
 EXPOSE $PORT
 CMD [ "node", "dist/index.js" ]
