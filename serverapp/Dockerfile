@@ -3,8 +3,8 @@ WORKDIR /app
 #COPY package*.json ./
 
 #RUN curl -v https://registry.npmjs.org/yauzl/-/yauzl-2.10.0.tgz
-COPY src/package.json package.json
-COPY src/npm-shrinkwrap.json npm-shrinkwrap.json
+COPY package.json package.json
+COPY npm-shrinkwrap.json npm-shrinkwrap.json
 
 RUN npm install --omit=dev
 
