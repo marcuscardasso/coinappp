@@ -3,9 +3,9 @@ WORKDIR /app
 COPY package*.json ./
 
 #RUN curl -v https://registry.npmjs.org/yauzl/-/yauzl-2.10.0.tgz
-RUN npm config set legacy-peer-deps true
-RUN npm install -g pnpm
-RUN pnpm install
+COPY ["package.json", "package-lock.json*", "./"]
+
+RUN npm install --production
 
 #RUN npm install
 
