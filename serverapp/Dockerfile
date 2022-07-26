@@ -4,7 +4,7 @@ COPY package*.json ./
 
 #RUN curl -v https://registry.npmjs.org/yauzl/-/yauzl-2.10.0.tgz
 RUN npm config set legacy-peer-deps true
-RUN npm install --prefer-offline --no-audit
+RUN pnpm install
 
 #RUN npm install
 
