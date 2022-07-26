@@ -26,6 +26,7 @@ services:
       - PORT=8001
     links:
       - db
+    tty: true
   nuxt-app:
     build: ./coinappui
     container_name: nuxt-app
