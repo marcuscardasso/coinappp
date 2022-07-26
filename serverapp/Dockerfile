@@ -1,11 +1,12 @@
-FROM node:16
+FROM node:12.18.1
 WORKDIR /app
-COPY package*.json ./
+#COPY package*.json ./
 
 #RUN curl -v https://registry.npmjs.org/yauzl/-/yauzl-2.10.0.tgz
-COPY ["package.json", "package-lock.json*", "./"]
+COPY src/package.json package.json
+COPY src/npm-shrinkwrap.json npm-shrinkwrap.json
 
-RUN npm install --production
+RUN npm install --omit=dev
 
 #RUN npm install
 
