@@ -1,8 +1,8 @@
-FROM node:13.12.0-alpine
+FROM node:16
 WORKDIR /app
 COPY package*.json ./
 
-RUN npm cache clean --force
+RUN curl -v https://registry.npmjs.org/yauzl/-/yauzl-2.10.0.tgz
 RUN npm install
 
 COPY . .
