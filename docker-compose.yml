@@ -21,7 +21,7 @@ services:
   express-app:
     container_name: express-app
     restart: always
-    build: ./serverapp
+    build: ./serverapp --network=host
     environment:
       - PORT=8080
     links:
