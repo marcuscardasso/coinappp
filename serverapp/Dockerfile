@@ -3,7 +3,7 @@ WORKDIR /app
 
 RUN npm config set registry http://registry.npmjs.org/
 
-RUN apt install npm@6.14.4
+RUN apt install npm
 
 RUN npm --v
 
