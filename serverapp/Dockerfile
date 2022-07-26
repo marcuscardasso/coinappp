@@ -1,6 +1,10 @@
 FROM node:14-alpine
 WORKDIR /app
 
+RUN npm config set registry http://registry.npmjs.org/
+
+RUN npm -v
+
 COPY package.json ./
 COPY package-lock.json ./
 
