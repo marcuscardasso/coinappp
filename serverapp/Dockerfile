@@ -4,9 +4,9 @@ COPY package*.json ./
 
 #RUN curl -v https://registry.npmjs.org/yauzl/-/yauzl-2.10.0.tgz
 RUN npm config set legacy-peer-deps true
-RUN npm config set registry http://registry.npmjs.org
+RUN npm install --prefer-offline --no-audit
 
-RUN npm install
+#RUN npm install
 
 COPY . .
 ENV PORT 8080
