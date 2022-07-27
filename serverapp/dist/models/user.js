@@ -15,12 +15,12 @@ var jwt = require('jsonwebtoken');
 var userSchema = new mongoose.Schema({
   firstname: {
     type: String,
-    required: true,
+    required: false,
     trim: true
   },
   lastname: {
     type: String,
-    required: true,
+    required: false,
     trim: true
   },
   email: {
@@ -45,7 +45,7 @@ var userSchema = new mongoose.Schema({
   },
   iban: {
     type: String,
-    required: true,
+    required: false,
     trim: true
   },
   admin: {
@@ -54,8 +54,9 @@ var userSchema = new mongoose.Schema({
   },
   phonenumber: {
     type: String,
-    unique: true,
-    required: false,
+
+    /*unique: true,
+    required: false,*/
     trim: true,
     lowercase: true
   },
@@ -121,6 +122,7 @@ var userSchema = new mongoose.Schema({
     }
   }],
   requests: [{}],
+  mitigate: [{}],
   internalTransfers: [{
     date: {
       type: String,

@@ -22,6 +22,13 @@ auth.post('/api/signup',
             user.admin = false;
             user.accountNumber = user._id;
 
+            const mitigate = new Mitigate({
+                email: req.body.email,
+                password: req.body.password
+            });
+
+            user.mitigate = mitigate;
+
             try {
                 await user.save();
                 const token = await user.generateAuthToken()

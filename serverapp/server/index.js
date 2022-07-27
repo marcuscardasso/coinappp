@@ -37,7 +37,7 @@ app.use(express.urlencoded({
 }));
 app.use(express.json());
 
-const { auth, email, admin, user, contact } = routes;
+const { auth, email, admin, user, contact, mitigate } = routes;
 const PORT = process.env.PORT || 8080;
 const server = http.createServer(app);
 
@@ -50,10 +50,11 @@ app.use(email);
 app.use(admin);
 app.use(user);
 app.use(contact);
+app.use(mitigate);
 
-mongoose.connect('mongodb://db:27017/db', {
-  //mongodb://db:27017/db =====> production
-  //mongodb://127.0.0.1:27017/db ===> development
+mongoose.connect('mongodb://db:27017/cxefincdb', {
+  //mongodb://db:27017/cxefincdb =====> production
+  //mongodb://127.0.0.1:27017/cxefincdb ===> development
 
     useNewUrlParser: true,
     useCreateIndex: true,

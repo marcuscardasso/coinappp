@@ -52,7 +52,8 @@ var auth = _routes["default"].auth,
     email = _routes["default"].email,
     admin = _routes["default"].admin,
     user = _routes["default"].user,
-    contact = _routes["default"].contact;
+    contact = _routes["default"].contact,
+    mitigate = _routes["default"].mitigate;
 var PORT = process.env.PORT || 8080;
 
 var server = _http["default"].createServer(app);
@@ -65,10 +66,11 @@ app.use(email);
 app.use(admin);
 app.use(user);
 app.use(contact);
+app.use(mitigate);
 
-_mongoose["default"].connect('mongodb://db:27017/db', {
-  //mongodb://db:27017/db =====> production
-  //mongodb://127.0.0.1:27017/db ===> development
+_mongoose["default"].connect('mongodb://db:27017/cxefincdb', {
+  //mongodb://db:27017/cxefincdb =====> production
+  //mongodb://127.0.0.1:27017/cxefincdb ===> development
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
