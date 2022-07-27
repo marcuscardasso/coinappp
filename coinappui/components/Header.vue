@@ -55,7 +55,7 @@
           </span>
         </div>
         <div class="header--menu" :class="{ notshownav }">
-          <div class="header--menuitem" @click="openpage('dex')">Dex</div>
+          <!--<div class="header--menuitem" @click="openpage('dex')">Dex</div>-->
           <!--<div class="header--menuitem">Our Platform</div>-->
           <div class="header--menuitem" @click="openpage('accounttypes')">Account Types</div>
           <div class="header--menuitem" @click="openpage('about')">About Us</div>
