@@ -130,7 +130,7 @@ export default {
               this.popupmessage = 'password should be more than 9 characters';
               this.popupmessageType = 'error';
             } else {
-              const user_token = JSON.parse(localStorage.getItem('cxetokenxtxtxt'));
+              const user_token = localStorage.getItem('cxetokenxtxtxt')
 
               if (user_token !== null && user_token !== undefined) {
                 const { email } = this.user;

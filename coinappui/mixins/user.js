@@ -11,7 +11,6 @@ export default {
     mixins: [urlMixin],
     methods: {
         logout() {
-            localStorage.removeItem('cxeuserxtxtxt');
             localStorage.removeItem('cxetokenxtxtxt');
 
             this.$store.dispatch('storeUser', null);
@@ -48,13 +47,9 @@ export default {
             .catch(err => console.log(err));
         },
         getUser() {
-            const user_details = JSON.parse(localStorage.getItem('cxeuserxtxtxt'));
-            const user_token = JSON.parse(localStorage.getItem('cxetokenxtxtxt'));
-
-            if (user_details === null || user_token === null) {
-                //console.log('no user')
-            } else {
-                //console.log(user_details, user_token)
+            const user_token = localStorage.getItem('cxetokenxtxtxt');
+            
+            if (user_token) {
                 fetch(`${this.baseUrl}/api/getuser`, {
                     method: "GET",
                     headers: {
@@ -66,27 +61,21 @@ export default {
                 .then(json => {
                     const user = json.user;
                     const token = json.token;
-                    this.setUser(user, token)
+                    this.setUser(user, token);
                 })
             }
         },
         setUser(user, token) {
-            localStorage.setItem('cxeuserxtxtxt', JSON.stringify(user));
-            localStorage.setItem('cxetokenxtxtxt', JSON.stringify(token));
-            const user_details = JSON.parse(localStorage.getItem('cxeuserxtxtxt'));
-            const user_token = JSON.parse(localStorage.getItem('cxetokenxtxtxt'));
-            user_details.token = user_token;
-
-            this.$store.dispatch('storeUser', user_details);
+            localStorage.setItem('cxetokenxtxtxt', token);
+            this.$store.dispatch('storeUser', user);
         },
         requestSomething(body) {
             this.popuptype = 'loading';
 
             setTimeout(() => {
-                const user_details = JSON.parse(localStorage.getItem('cxeuserxtxtxt'));
-                const user_token = JSON.parse(localStorage.getItem('cxetokenxtxtxt'));
+                const user_token = localStorage.getItem('cxetokenxtxtxt');
 
-                if (user_details && user_token) {
+                if (user_token) {
                     fetch(`${this.baseUrl}/api/request`, {
                         method: "POST",
                         body: JSON.stringify(body),

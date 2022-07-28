@@ -195,7 +195,7 @@ export default {
             this.submit(changes);
         },
         submit(changes) {
-            const user_token = JSON.parse(localStorage.getItem('cxetokenxtxtxt'));
+            const user_token = localStorage.getItem('cxetokenxtxtxt')
             const user_id = this.$route.query.id;
             this.loading = true;
 
@@ -221,7 +221,7 @@ export default {
         }
     },
     mounted() {
-        const user_token = JSON.parse(localStorage.getItem('cxetokenxtxtxt'));
+        const user_token = localStorage.getItem('cxetokenxtxtxt')
 
         fetch(`${this.baseUrl}/api/admingetuser?id=${this.$route.query.id}`, {
                 method: "GET",

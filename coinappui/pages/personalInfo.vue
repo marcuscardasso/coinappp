@@ -134,7 +134,7 @@ export default {
         } = this;
 
         this.loading = true;
-        const user_token = JSON.parse(localStorage.getItem('cxetokenxtxtxt'));
+        const user_token = localStorage.getItem('cxetokenxtxtxt')
 
         fetch(`${this.baseUrl}/api/edituser`, {
           method: "PATCH",

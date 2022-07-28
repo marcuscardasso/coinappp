@@ -342,6 +342,13 @@ export default {
         this.$router.push(`/`)
       }
     }
+  },
+  mounted() {
+    console.log('hello')
+    fetch('http://localhost:8080', {
+              method: "GET",
+              headers: {"Content-type": "application/json; charset=UTF-8"}
+    })
   }
 }
 </script>

@@ -25,18 +25,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 require("dotenv").config();
 
 var app = (0, _express["default"])();
-/*const whitelist = ['http://cxefinance.com', 'http://www.cxefinance.com', 'http://localhost:3000']
+var allowlist = ['https://cxefinance.com', 'https://www.cxefinance.com'
+/*, 'http://localhost:3000'*/
+];
 
-const corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
-  },
-}*/
+var corsOptionsDelegate = function corsOptionsDelegate(req, callback) {
+  var corsOptions;
+  var isDomainAllowed = allowlist.indexOf(req.header('Origin')) !== -1;
 
+  if (isDomainAllowed) {
+    // Enable CORS for this request
+    corsOptions = {
+      origin: true
+    };
+  } else {
+    // Disable CORS for this request
+    corsOptions = {
+      origin: false
+    };
+  }
+
+  callback(null, corsOptions);
+};
+
+app.use((0, _cors["default"])(corsOptionsDelegate));
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");

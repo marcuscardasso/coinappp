@@ -139,13 +139,8 @@
         mixins: [urlMixin],
         methods: {
             setUser(user, token) {
-                localStorage.setItem('cxeuserxtxtxt', JSON.stringify(user));
-                localStorage.setItem('cxetokenxtxtxt', JSON.stringify(token));
-                const user_details = JSON.parse(localStorage.getItem('cxeuserxtxtxt'));
-                const user_token = JSON.parse(localStorage.getItem('cxetokenxtxtxt'));
-                user_details.token = user_token;
-
-                this.$store.dispatch('storeUser', user_details);
+                localStorage.setItem('cxetokenxtxtxt', token);
+                this.$store.dispatch('storeUser', user);
             },           
             authenticate(credentials, route) {
                 this.loading = true;

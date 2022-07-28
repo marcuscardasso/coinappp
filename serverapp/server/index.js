@@ -12,17 +12,24 @@ import routes from './routes';
 
 const app = express();
 
-/*const whitelist = ['http://cxefinance.com', 'http://www.cxefinance.com', 'http://localhost:3000']
+const allowlist = ['https://cxefinance.com', 'https://www.cxefinance.com'/*, 'http://localhost:3000'*/];
 
-const corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
-  },
-}*/
+const corsOptionsDelegate = (req, callback) => {
+  let corsOptions;
+
+  let isDomainAllowed = allowlist.indexOf(req.header('Origin')) !== -1;
+
+  if (isDomainAllowed) {
+      // Enable CORS for this request
+      corsOptions = { origin: true }
+  } else {
+      // Disable CORS for this request
+      corsOptions = { origin: false }
+  }
+  callback(null, corsOptions)
+}
+
+app.use(cors(corsOptionsDelegate));
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");

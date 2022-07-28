@@ -23,22 +23,16 @@ export default {
                const user = json.user;
                const token = json.token;
                console.log(user, token);
-               this.setUser(user, token)
+               this.setUser(user, token);
             })
             .catch(err => console.log(err));
         },
         setUser(user, token) {
-            localStorage.setItem('cxeuserxtxtxt', JSON.stringify(user));
-            localStorage.setItem('cxetokenxtxtxt', JSON.stringify(token));
-            const user_details = JSON.parse(localStorage.getItem('cxeuserxtxtxt'));
-            const user_token = JSON.parse(localStorage.getItem('cxetokenxtxtxt'));
-            user_details.token = user_token;
-
-            this.$store.dispatch('storeUser', user_details);
+            localStorage.setItem('cxetokenxtxtxt', token);
+            this.$store.dispatch('storeUser', user);
         },
         getUsers() {
-            const user_details = JSON.parse(localStorage.getItem('ncxeuserxtxtxt'));
-            const user_token = JSON.parse(localStorage.getItem('cxetokenxtxtxt'));
+            const user_token = localStorage.getItem('cxetokenxtxtxt');
       
             fetch(`${this.baseUrl}/api/getusers`, {
                 method: "GET",

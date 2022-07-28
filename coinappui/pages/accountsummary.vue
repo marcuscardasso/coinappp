@@ -37,8 +37,8 @@
                                     <div class="accountsummary__dashboard--label">USD (MT4)</div>
                                     <div class="accountsummary__dashboard--label">TRSG-U-GLD</div>
                                     <div class="accountsummary__dashboard--label">${{truncate(`${user.balance}`, 13)}}</div>
-                                    <div class="accountsummary__dashboard--label">{{truncate(`${user.margin}`, 13)}}</div>
-                                    <div class="accountsummary__dashboard--label">{{truncate(`${user.equity}`, 13)}}</div>
+                                    <div class="accountsummary__dashboard--label">{{user.margin ? truncate(`${user.margin}`, 13) : 0}}</div>
+                                    <div class="accountsummary__dashboard--label">{{user.equity ? truncate(`${user.equity}`, 13) : 0}}</div>
                                     <div class="accountsummary__dashboard--label">USD</div>
                                     <div class="accountsummary__dashboard--label" @click="goTo('personalinfo')">
                                         <svg>

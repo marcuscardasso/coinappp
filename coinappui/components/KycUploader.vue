@@ -32,7 +32,7 @@ export default {
           this.$bus.$emit('handleUpload', label );
       },
       submit(route) {
-          const user_token = JSON.parse(localStorage.getItem('cxetokenxtxtxt'));
+          const user_token = localStorage.getItem('cxetokenxtxtxt');
           const formData = new FormData();
           formData.append('kycfile', this.file);
 

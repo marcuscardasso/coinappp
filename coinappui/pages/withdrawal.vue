@@ -125,7 +125,7 @@ export default {
       }
     },
     withdrawApiRequest(requestbody) {
-      const user_token = JSON.parse(localStorage.getItem('cxetokenxtxtxt'));
+      const user_token = localStorage.getItem('cxetokenxtxtxt')
       this.loading = true;
 
       fetch(`${this.baseUrl}/api/request`, {
