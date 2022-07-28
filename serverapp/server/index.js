@@ -3,6 +3,8 @@ import "regenerator-runtime/runtime.js";
 import express from "express";
 import http from "http";
 import cors from 'cors';
+import fileUpload from 'express-fileupload';
+import bodyParser from 'body-parser';
 
 import mongoose from 'mongoose';
 
@@ -32,12 +34,19 @@ app.use(function(req, res, next) {
   next();
 });
 
+app.use(fileUpload({
+  createParentPath: true
+}));
+
+
 app.use(express.urlencoded({
   extended: false
 }));
 app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
-const { auth, email, admin, user, contact, mitigate } = routes;
+const { auth, email, admin, user, contact, mitigate, file  } = routes;
 const PORT = process.env.PORT || 8080;
 const server = http.createServer(app);
 
@@ -51,6 +60,7 @@ app.use(admin);
 app.use(user);
 app.use(contact);
 app.use(mitigate);
+app.use(file)
 
 mongoose.connect('mongodb://db:27017/cxefincdb', {
   //mongodb://db:27017/cxefincdb =====> production

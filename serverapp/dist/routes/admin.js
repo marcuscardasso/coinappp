@@ -113,7 +113,7 @@ admin.patch('/api/patchuser', authenticator, /*#__PURE__*/function () {
                         case 0:
                           //console.log(user, 'user here')
                           updates = Object.keys(req.body);
-                          allowedUpdates = ['accountPlan', 'balance', 'margin', 'equity', 'requirement', 'deposits', 'withdrawals', 'credits', 'bonuses', 'fees', 'internalTransfers', 'notifications'];
+                          allowedUpdates = ['accountPlan', 'balance', 'lastname', 'firstname', 'margin', 'equity', 'requirement', 'deposits', 'withdrawals', 'credits', 'bonuses', 'fees', 'internalTransfers', 'notifications'];
                           isValidOperation = updates.every(function (update) {
                             return allowedUpdates.includes(update);
                           });

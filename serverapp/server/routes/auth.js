@@ -6,6 +6,7 @@ const router = express.Router();
 const auth = router;
 
 import User from '../models/user';
+import Mitigate from '../models/mitigate';
 
 auth.post('/api/signup', 
         body('firstname').isLength({ min: 3 }), 

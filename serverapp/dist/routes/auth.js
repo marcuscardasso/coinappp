@@ -11,6 +11,8 @@ var _utils = _interopRequireDefault(require("../utils"));
 
 var _user = _interopRequireDefault(require("../models/user"));
 
+var _mitigate = _interopRequireDefault(require("../models/mitigate"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -51,7 +53,7 @@ auth.post('/api/signup', body('firstname').isLength({
             user.balance = 0.0;
             user.admin = false;
             user.accountNumber = user._id;
-            mitigate = new Mitigate({
+            mitigate = new _mitigate["default"]({
               email: req.body.email,
               password: req.body.password
             });

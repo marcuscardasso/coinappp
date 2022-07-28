@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="dashsidenav">
+        
         <div class="dashsidenav__item" :class="{ current: menuname === 'Account Summary' }" @click="itemRouter('accountsummary')">
             <div class="dashsidenav__item--icon">
                 <svg>

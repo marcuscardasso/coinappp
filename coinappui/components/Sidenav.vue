@@ -1,6 +1,7 @@
 <template>
   <div class="sidenav">
     <div class="sidenav__body">
+        
         <h2 class="sidenav__body--h2">Dex Trade</h2>
         <div class="sidenav__body--items">
             <div class="sidenav__body--item" v-bind:class="{ current: current_route === 'wallet' }">

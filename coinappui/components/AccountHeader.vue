@@ -12,6 +12,7 @@
                 <span>Balance: <span class="bold">${{user.balance}}</span></span>
             </div>
         </div>
+        <KYC />
     </div>
   </div>
 </template>

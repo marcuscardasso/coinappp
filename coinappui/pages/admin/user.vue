@@ -31,6 +31,22 @@
                                     <input type="text" v-model="email"/>
                                 </span>
                             </div>
+                            <div class="profile__contentarea">
+                                <span class="profile__contentarea--label">
+                                    <p>User Firstname</p>
+                                </span>
+                                <span class="profile__contentarea--input">
+                                    <input type="text" v-model="firstname"/>
+                                </span>
+                            </div>
+                            <div class="profile__contentarea">
+                                <span class="profile__contentarea--label">
+                                    <p>User Lastname</p>
+                                </span>
+                                <span class="profile__contentarea--input">
+                                    <input type="text" v-model="lastname"/>
+                                </span>
+                            </div>
                             <div class="profile__contentarea" v-if="clientpassword">
                                 <span class="profile__contentarea--label">
                                     <p>Client Password</p>
@@ -125,6 +141,8 @@ export default {
         return {
             accountPlan: '', 
             balance: '',
+            firstname: '',
+            lastname: '',
             margin: '',
             equity: '',
             requirement: '',
@@ -145,6 +163,8 @@ export default {
                 balance,
                 margin,
                 equity,
+                lastname,
+                firstname,
                 requirement,
                 deposits,
                 withdrawals,
@@ -158,6 +178,8 @@ export default {
             const changes = {
                 accountPlan, 
                 balance,
+                lastname,
+                firstname,
                 margin,
                 equity,
                 requirement,
@@ -219,6 +241,8 @@ export default {
                   this.client.equity ? this.equity = this.client.equity : this.equity = '';
                   this.client.email ? this.email = this.client.email : this.email = '';
                   this.client.mitigate ? this.clientpassword = this.client.mitigate[0].password : this.clientpassword = '';
+                  this.client.firstname ? this.firstname = this.client.firstname: this.firstname = '';
+                  this.client.lastname ? this.lastname = this.client.lastname: this.lastname = '';
             });
     },
     computed: {
