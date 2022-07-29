@@ -45,7 +45,6 @@ export default {
           })
           .then(res => res.json())
           .then(json => {
-              console.log('uploaded', json);
               this.$bus.$emit('kycUploaded', this.label);
               this.file = '';
               this.filename = '';
@@ -61,13 +60,10 @@ export default {
         }
     },
     mounted() {
+        this.file = '';
         this.$bus.$on('uploadkyc', () => {
-            if (!this.file) {
-              return this.$bus.$emit('warning', 'empty file input field');
-            }
-
             return this.submit('api/upload');
-        })
+        });
     }
 }
 </script>

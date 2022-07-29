@@ -12,11 +12,6 @@
                 </div>
 
                 <div class="documents__content--right">
-                  <div class="documents__content--error" v-if="error">
-                    <p>{{error}}</p>
-                    <span class="close" @click="closeerror">X</span>
-                  </div>
-
                   <div class="documents__dashboard">
                     <div class="documents__dashboard--top">
                         <h1>DOCUMENTS (KYC)</h1>
@@ -26,7 +21,7 @@
                     <div class="documents__dashboard--disclaimers">
                       <p class="documents__dashboard--disclaimer">
                         <span>Cxefinance</span> 
-                        complies with global regulations on KYC policies. All submitted documentation to TrustexGroup will be 
+                        complies with global regulations on KYC policies. All submitted documentation to Cxefinance will be 
                         treated as private and confidential. By verifying your account, you are helping us fulfill our compliance 
                         obligations such as Anti Money Laundering (AML), Know Your Customer (KYC) and Counter Terrorism Financing (CTF) 
                         and ensuring the integrity and security of your account. We take your privacy seriously here at, for more information 
